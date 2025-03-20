@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/track_n_notify-adaptive-icon.png",
         "backgroundColor": "#87cefc"
-      }
+      },
+      "package": "com.prmsu.track_n_notify"
     },
     "web": {
       "bundler": "metro",
