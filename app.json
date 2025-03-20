@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "track-n-notify",
+    "name": "Track n' Notify",
     "slug": "track-n-notify",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/track_n_notify-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,8 +13,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/track_n_notify-adaptive-icon.png",
+        "backgroundColor": "#87cefc"
       }
     },
     "web": {
@@ -27,15 +27,24 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/track_n_notify-splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#87cefc"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "0bccdfd0-42d9-4616-82ff-56a2fd1011fe"
+      }
+    },
+    "owner": "zero-dev"
   }
 }
