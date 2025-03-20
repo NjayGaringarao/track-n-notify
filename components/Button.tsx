@@ -14,13 +14,13 @@ const Button: React.FC<ButtonProps> = ({
   title = "",
   handlePress,
   containerStyles,
-  textStyles = "text-white",
+  textStyles,
   isLoading = false,
   children,
 }) => {
   return (
     <View
-      className={`h-10 bg-primary rounded-xl overflow-hidden px-4 ${containerStyles} ${
+      className={`h-10 bg-primary rounded-lg overflow-hidden px-4 ${containerStyles} ${
         isLoading ? "opacity-50" : "opacity-100"
       }`}
     >
@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({
       >
         {children}
         <Text
-          className={`text-center font-semibold text-lg ${textStyles} ${
+          className={`text-uBlack text-center font-semibold text-lg ${textStyles} ${
             title ? "visible" : "hidden"
           }`}
         >

@@ -1,6 +1,6 @@
 import { View, Text, ActivityIndicator } from "react-native";
 import React from "react";
-import { color } from "@/constants/color";
+import color from "@/constants/color";
 
 type LoadingType = {
   containerStyles?: string;

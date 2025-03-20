@@ -7,7 +7,7 @@ import {
   TextInputProps,
 } from "react-native";
 import React, { useState } from "react";
-import { color } from "@/constants/color";
+import color from "@/constants/color";
 
 interface TextBoxProps extends TextInputProps {
   title?: string;
@@ -46,7 +46,9 @@ const FormField: React.FC<TextBoxProps> = ({
         {title}
       </Text>
       <View className="w-full">
-        <View className={` px-4 h-10 ${boxStyles} flex-row`}>
+        <View
+          className={` px-4 h-10 bg-white rounded-lg border-2 border-primary ${boxStyles} flex-row`}
+        >
           <TextInput
             className={`flex-1 text-uBlack font-medium ${
               isPassword ? "mr-10" : ""

@@ -32,7 +32,7 @@ export default function Index() {
         <View className="w-11/12 mb-12">
           <View className="absolute h-full w-full bg-black opacity-60 rounded-xl" />
           <View className="w-full p-4 gap-4">
-            <Text className="text-primary text-2xl font-semibold">Login</Text>
+            <Text className="text-primary text-2xl font-semibold">Sign In</Text>
             <View className="w-full flex-row justify-between">
               <TouchableOpacity
                 className="w-[48%] h-28 bg-primary rounded-lg justify-center items-center"
@@ -64,7 +64,7 @@ export default function Index() {
             <View className="w-full flex-row justify-between">
               <TouchableOpacity
                 className="w-[48%] h-28 bg-primary rounded-lg justify-center items-center"
-                onPress={() => router.push("/(auth)/sign_in/ADMIN")}
+                onPress={() => router.push("/(auth)/sign_in/ADMINISTRATOR")}
               >
                 <Image
                   className="h-14 w-14"
