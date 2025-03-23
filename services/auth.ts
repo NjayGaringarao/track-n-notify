@@ -1,5 +1,10 @@
 import { ISignUp } from "@/types/interface";
-import { _executeFunction, listDocuments } from "./appwrite";
+import {
+  _executeFunction,
+  getDocument,
+  listDocuments,
+  signInUser,
+} from "./appwrite";
 import { env } from "@/constants/env";
 import { AdminInfo, SecurityInfo, StudentInfo } from "@/types/model";
 import { Query } from "react-native-appwrite";
@@ -86,5 +91,39 @@ export const signUp = async ({
   } catch (error) {
     console.log("auth.signUp : ", error);
     throw Error("There was a problem creating your account.");
+  }
+};
+
+export const signIn = async (
+  role: string,
+  user_id: string,
+  password: string
+) => {
+  try {
+    const credential = await getDocument(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_USER_CREDENTIALS,
+      user_id
+    );
+
+    if (credential.role != role) throw "NOT-MATCHED";
+    return await signInUser(credential.email, password);
+  } catch (error) {
+    if (
+      error ==
+      "AppwriteException: Document with the requested ID could not be found."
+    ) {
+      throw "The provided ID is not used in a registered account.";
+    } else if (error == "NOT-MATCHED") {
+      throw "ID does not matched with the role.";
+    } else if (
+      error ==
+      "AppwriteException: Invalid credentials. Please check the email and password."
+    ) {
+      throw "Incorrect password.";
+    } else {
+      console.log("auth.studentSignIn : ", error);
+      throw "There was a problem signing in to your account.";
+    }
   }
 };

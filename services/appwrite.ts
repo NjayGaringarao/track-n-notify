@@ -115,6 +115,7 @@ export const getDocument = async (
     return result;
   } catch (error) {
     console.log("appwrite.getDocument : ", error);
+    throw error;
   }
 };
 

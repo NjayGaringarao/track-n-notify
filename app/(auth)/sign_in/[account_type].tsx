@@ -7,53 +7,30 @@ import color from "@/constants/color";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Toast from "react-native-toast-message";
+import { signIn } from "@/services/auth";
 
 const sign_in = () => {
   const [accountType, setAccountType] = useState("");
   const [identifierPrompt, setIdentifierPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
-    identifier: "",
+    user_id: "",
     password: "",
   });
   const searchParams = useGlobalSearchParams();
 
-  const validateInput = async () => {
-    if (!form.identifier.length) {
-      Toast.show({
-        type: "error",
-        text1: "Invalid ID",
-        text2: "Please fillout Student/Employee Number field.",
-      });
-      return false;
-    }
-    if (!form.password.length) {
-      Toast.show({
-        type: "error",
-        text1: "Invalid Password",
-        text2: "Please fillout the password field.",
-      });
-      return false;
-    }
-
-    // TODO: validate user ID if it is student, admin, or security
-
-    return true;
-  };
-
   const signInHandle = async () => {
     try {
       setIsLoading(true);
-      if (!(await validateInput())) throw "resolved";
-      // TODO: implement login
+
+      await signIn(accountType, form.user_id, form.password);
+      // TODO: implement navigation
     } catch (error) {
-      if (error != "resolved")
-        Toast.show({
-          type: "error",
-          text1: "Invalid Password",
-          text2: "Please try again with different password.",
-          visibilityTime: 5000,
-        });
+      Toast.show({
+        type: "error",
+        text1: "Login Failed",
+        text2: `${error}`,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -105,8 +82,8 @@ const sign_in = () => {
             <View className="w-full gap-6">
               <TextBox
                 title={identifierPrompt}
-                textValue={form.identifier}
-                handleChangeText={(e) => setForm({ ...form, identifier: e })}
+                textValue={form.user_id}
+                handleChangeText={(e) => setForm({ ...form, user_id: e })}
                 titleTextStyles="text-white"
               />
               <TextBox
@@ -120,6 +97,7 @@ const sign_in = () => {
                 title="Sign In"
                 handlePress={signInHandle}
                 containerStyles="mt-4"
+                isLoading={!form.password.length || !form.user_id.length}
               />
             </View>
           </View>
