@@ -75,17 +75,17 @@ export default function Index() {
                   Administrator
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity className="w-[48%] h-28 bg-primary rounded-lg justify-center items-center">
+              <TouchableOpacity
+                className="w-[48%] h-28 bg-primary rounded-lg justify-center items-center"
+                onPress={() => router.push("/(auth)/sign_up")}
+              >
                 <Image
                   className="h-14 w-14"
                   source={icon.no_account}
                   tintColor={color.uBlack}
                 />
-                <Text
-                  className="text-lg text-uBlack font-semibold"
-                  onPress={() => router.push("/(auth)/sign_up")}
-                >
-                  No Account ?
+                <Text className="text-lg text-uBlack font-semibold">
+                  No Account?
                 </Text>
               </TouchableOpacity>
             </View>
