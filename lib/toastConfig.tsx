@@ -40,6 +40,7 @@ const customToastConfig = {
           style={{
             flex: 1,
             gap: 4,
+            paddingHorizontal: 4,
           }}
         >
           <Text style={{ fontSize: 18, fontWeight: "600", color: color.white }}>
@@ -89,6 +90,7 @@ const customToastConfig = {
           style={{
             flex: 1,
             gap: 4,
+            paddingHorizontal: 4,
           }}
         >
           <Text style={{ fontSize: 18, fontWeight: "600", color: color.white }}>
