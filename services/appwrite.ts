@@ -9,6 +9,7 @@ import {
   Functions,
   Flag,
   Browser,
+  ExecutionMethod,
 } from "react-native-appwrite";
 
 const client = new Client();
@@ -117,6 +118,24 @@ export const getDocument = async (
   }
 };
 
+export const listDocuments = async (
+  DATABASE_ID: string,
+  COLLECTION_ID: string,
+  query?: string[]
+) => {
+  try {
+    const documentList = await appwriteService.database.listDocuments(
+      DATABASE_ID,
+      COLLECTION_ID,
+      query
+    );
+    return documentList;
+  } catch (error) {
+    console.log("appwrite.listDocuments : ", error);
+    throw error;
+  }
+};
+
 export const generateQR = (student_id: string) => {
   try {
     const result = appwriteService.avatars.getQR(
@@ -129,4 +148,25 @@ export const generateQR = (student_id: string) => {
   } catch (error) {
     console.log("appwrite.generateQR : ", error);
   }
+};
+
+export const _executeFunction = async (
+  FUNCTION_ID: string,
+  operation: string,
+  parameter: object
+) => {
+  const bodyRequest = {
+    operation: operation,
+    parameter: parameter,
+  };
+
+  const result = await appwriteService.functions.createExecution(
+    FUNCTION_ID,
+    JSON.stringify(bodyRequest),
+    false,
+    undefined,
+    ExecutionMethod.POST
+  );
+
+  return result;
 };

@@ -10,6 +10,7 @@ import color from "@/constants/color";
 import Toast from "react-native-toast-message";
 import { regex } from "@/constants/regex";
 import { router } from "expo-router";
+import { isEmailExisting, isUserIdExisting, signUp } from "@/services/auth";
 
 const sign_up = () => {
   const [accountType, setAccountType] = useState("STUDENT");
@@ -35,7 +36,7 @@ const sign_up = () => {
 
   const [adminForm, setAdminForm] = useState({
     id: "",
-    dep: "REGISTRAR",
+    department: "REGISTRAR",
   });
 
   const [securityForm, setSecurityForm] = useState({
@@ -61,10 +62,19 @@ const sign_up = () => {
       dep_prog: "CCIT-BSCS",
       year_level: "FIRST",
     });
+    setAdminForm({
+      id: "",
+      department: "REGISTRAR",
+    });
+
+    setSecurityForm({
+      id: "",
+      type: "GATE-KEEPER",
+    });
     setAccountType("STUDENT");
   };
 
-  const validateInput = () => {
+  const validateInput = async () => {
     if (!nameForm.last.length || !nameForm.first.length) {
       Toast.show({
         type: "error",
@@ -128,13 +138,55 @@ const sign_up = () => {
       });
       return false;
     }
+
+    if (
+      await isUserIdExisting(
+        accountType === "STUDENT"
+          ? studentForm.id
+          : accountType === "ADMINISTRATOR"
+          ? adminForm.id
+          : accountType === "SECURITY"
+          ? securityForm.id
+          : ""
+      )
+    ) {
+      Toast.show({
+        type: "error",
+        text1: "ID Already Used",
+        text2: "Using the same ID for multiple account is not allowed.",
+      });
+      return false;
+    }
+
+    if (await isEmailExisting(credentialForm.email)) {
+      Toast.show({
+        type: "error",
+        text1: "Email Already Used",
+        text2: "Please try again with different email.",
+      });
+      return false;
+    }
     return true;
   };
 
   const signUpHandle = async () => {
-    if (!validateInput()) return;
     try {
       setIsLoading(true);
+      if (!(await validateInput())) throw "EXIT";
+
+      await signUp({
+        role: accountType,
+        role_info:
+          accountType === "STUDENT"
+            ? studentForm
+            : accountType === "ADMINISTRATOR"
+            ? adminForm
+            : securityForm,
+        name: [nameForm.first, nameForm.middle, nameForm.last],
+        email: credentialForm.email,
+        password: credentialForm.password,
+      });
+
       Toast.show({
         type: "success",
         text1: "Sign Up Success",
@@ -144,11 +196,13 @@ const sign_up = () => {
       clearHandle();
       router.back();
     } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: "Sign Up Failed",
-        text2: `${error}`,
-      });
+      if (error !== "EXIT") {
+        Toast.show({
+          type: "error",
+          text1: "Sign Up Failed",
+          text2: `${error}`,
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -314,7 +368,7 @@ const sign_up = () => {
                       <ItemPicker
                         value={studentForm.dep_prog}
                         onChange={(value) =>
-                          setAdminForm({ ...adminForm, dep: value })
+                          setAdminForm({ ...adminForm, department: value })
                         }
                         containerStyle="flex-1 border-2 border-primary rounded-xl bg-white"
                       >
