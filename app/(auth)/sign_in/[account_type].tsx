@@ -6,6 +6,7 @@ import image from "@/constants/image";
 import color from "@/constants/color";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
+import Toast from "react-native-toast-message";
 
 const sign_in = () => {
   const [accountType, setAccountType] = useState("");
@@ -17,9 +18,45 @@ const sign_in = () => {
   });
   const searchParams = useGlobalSearchParams();
 
+  const validateInput = async () => {
+    if (!form.identifier.length) {
+      Toast.show({
+        type: "error",
+        text1: "Invalid ID",
+        text2: "Please fillout Student/Employee Number field.",
+      });
+      return false;
+    }
+    if (!form.password.length) {
+      Toast.show({
+        type: "error",
+        text1: "Invalid Password",
+        text2: "Please fillout the password field.",
+      });
+      return false;
+    }
+
+    // TODO: validate user ID if it is student, admin, or security
+
+    return true;
+  };
+
   const signInHandle = async () => {
     try {
-    } catch (error) {}
+      setIsLoading(true);
+      if (!(await validateInput())) throw "resolved";
+      // TODO: implement login
+    } catch (error) {
+      if (error != "resolved")
+        Toast.show({
+          type: "error",
+          text1: "Invalid Password",
+          text2: "Please try again with different password.",
+          visibilityTime: 5000,
+        });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
