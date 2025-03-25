@@ -8,9 +8,10 @@ import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import color from "@/constants/color";
 import Toast from "react-native-toast-message";
+import { isEmailExisting, isUserIdExisting } from "@/services/credentials";
 import { regex } from "@/constants/regex";
 import { router } from "expo-router";
-import { isEmailExisting, isUserIdExisting, signUp } from "@/services/auth";
+import { signUp } from "@/services/auth";
 
 const sign_up = () => {
   const [accountType, setAccountType] = useState("STUDENT");
