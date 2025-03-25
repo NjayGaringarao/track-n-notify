@@ -1,7 +1,7 @@
-import { ISignUp } from "@/types/interface";
+import { ISignUp } from "@/services/types/interface";
 import { _executeFunction, getDocument, signInUser } from "./appwrite";
 import { env } from "@/constants/env";
-import { AdminInfo, SecurityInfo, StudentInfo } from "@/types/model";
+import { AdminInfo, SecurityInfo, StudentInfo } from "@/services/types/model";
 
 export const signUp = async ({
   role,
