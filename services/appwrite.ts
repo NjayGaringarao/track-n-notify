@@ -68,6 +68,16 @@ export const signInUser = async (email: string, password: string) => {
   }
 };
 
+export const getSession = async () => {
+  try {
+    const res = await appwriteService.account.getSession("current");
+    return res;
+  } catch (error) {
+    console.log(`appwrite.getSession : ${error}`);
+    throw error;
+  }
+};
+
 export const signOutUser = async () => {
   try {
     return appwriteService.account.deleteSession("current");

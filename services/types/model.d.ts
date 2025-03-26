@@ -24,5 +24,8 @@ export type User = {
   id: string;
   name: [string, string?, string];
   address: [string?, string?, string?, string?];
-  dob: Date;
+  birth_date?: Date;
+  student_info?: StudentInfo;
+  admin_info?: AdminInfo;
+  security_info?: SecurityInfo;
 };
