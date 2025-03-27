@@ -13,6 +13,7 @@ import { regex } from "@/constants/regex";
 import { router } from "expo-router";
 import { signUp } from "@/services/auth";
 import { confirmAction } from "@/util/common";
+import { AdminInfo, SecurityInfo, StudentInfo } from "@/services/types/model";
 
 const sign_up = () => {
   const [accountType, setAccountType] = useState("STUDENT");
@@ -30,18 +31,20 @@ const sign_up = () => {
     confPassword: "",
   });
 
-  const [studentForm, setStudentForm] = useState({
+  const [studentForm, setStudentForm] = useState<StudentInfo>({
     id: "",
     dep_prog: "CCIT-BSCS",
+    guardian_info: [],
     year_level: "FIRST",
+    isLoggedIn: true,
   });
 
-  const [adminForm, setAdminForm] = useState({
+  const [adminForm, setAdminForm] = useState<AdminInfo>({
     id: "",
     department: "REGISTRAR",
   });
 
-  const [securityForm, setSecurityForm] = useState({
+  const [securityForm, setSecurityForm] = useState<SecurityInfo>({
     id: "",
     type: "GATE-KEEPER",
   });
@@ -62,7 +65,9 @@ const sign_up = () => {
     setStudentForm({
       id: "",
       dep_prog: "CCIT-BSCS",
+      guardian_info: [],
       year_level: "FIRST",
+      isLoggedIn: true,
     });
     setAdminForm({
       id: "",
