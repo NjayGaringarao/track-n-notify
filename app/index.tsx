@@ -4,7 +4,10 @@ import icon from "@/constants/icon";
 import "@/constants/color";
 import color from "@/constants/color";
 import { router } from "expo-router";
+import { useGlobalContext } from "@/context/GlobalProvider";
+import Loading from "@/components/Loading";
 export default function Index() {
+  const { isLoading } = useGlobalContext();
   return (
     <View className="flex-1 justify-center items-center">
       <Image
@@ -90,6 +93,14 @@ export default function Index() {
               </TouchableOpacity>
             </View>
           </View>
+          {isLoading && (
+            <View className="absolute h-full w-full items-center justify-center">
+              <View className="absolute h-full w-full bg-black opacity-70 rounded-xl" />
+              <View>
+                <Loading loadingPrompt="Loading" loadingColor={color.primary} />
+              </View>
+            </View>
+          )}
         </View>
       </View>
     </View>

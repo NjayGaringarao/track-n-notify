@@ -58,7 +58,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setUserCredential(_userCredentials);
 
         console.log("User role:", currentUser.labels[0]!);
-        // TODO : Implement navigation
+        router.navigate("/home");
       } else {
         setUser(null);
         router.replace("/");

@@ -8,8 +8,10 @@ import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Toast from "react-native-toast-message";
 import { signIn } from "@/services/auth";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const sign_in = () => {
+  const { initializeGlobalState } = useGlobalContext();
   const [accountType, setAccountType] = useState("");
   const [identifierPrompt, setIdentifierPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -23,8 +25,12 @@ const sign_in = () => {
     try {
       setIsLoading(true);
 
-      await signIn(accountType, form.user_id, form.password);
-      // TODO: implement navigation
+      await signIn(
+        accountType,
+        form.user_id,
+        form.password,
+        initializeGlobalState
+      );
     } catch (error) {
       Toast.show({
         type: "error",
@@ -37,7 +43,7 @@ const sign_in = () => {
   };
 
   useEffect(() => {
-    if (searchParams) {
+    if (searchParams.account_type) {
       const _accountType = searchParams.account_type.toString();
       setAccountType(_accountType);
       if (_accountType === "STUDENT") {

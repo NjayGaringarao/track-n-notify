@@ -12,6 +12,7 @@ import { isEmailExisting, isUserIdExisting } from "@/services/credentials";
 import { regex } from "@/constants/regex";
 import { router } from "expo-router";
 import { signUp } from "@/services/auth";
+import { confirmAction } from "@/util/common";
 
 const sign_up = () => {
   const [accountType, setAccountType] = useState("STUDENT");
@@ -171,6 +172,9 @@ const sign_up = () => {
   };
 
   const signUpHandle = async () => {
+    if (!(await confirmAction("Confirm SignUp", "Do you want to proceed?"))) {
+      return;
+    }
     try {
       setIsLoading(true);
       if (!(await validateInput())) throw "EXIT";

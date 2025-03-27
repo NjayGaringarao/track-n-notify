@@ -90,7 +90,13 @@ export const getCurrentUser = async () => {
   try {
     return await appwriteService.account.get();
   } catch (error) {
-    console.log("appwrite.getCurrentUser : ", error);
+    if (
+      error == "AppwriteException: User (role: guests) missing scope (account)"
+    ) {
+      console.log("No Logged In Account");
+    } else {
+      console.log("appwrite.getCurrentUser : ", error);
+    }
   }
 };
 export const createDocument = async (

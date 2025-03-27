@@ -1,5 +1,10 @@
 import { ISignUp } from "@/services/types/interface";
-import { _executeFunction, getDocument, signInUser } from "./appwrite";
+import {
+  _executeFunction,
+  getDocument,
+  signInUser,
+  signOutUser,
+} from "./appwrite";
 import { env } from "@/constants/env";
 import { AdminInfo, SecurityInfo, StudentInfo } from "@/services/types/model";
 
@@ -61,7 +66,8 @@ export const signUp = async ({
 export const signIn = async (
   role: string,
   user_id: string,
-  password: string
+  password: string,
+  initializeGlobalState: () => Promise<void>
 ) => {
   try {
     const credential = await getDocument(
@@ -71,7 +77,9 @@ export const signIn = async (
     );
 
     if (credential.role != role) throw "NOT-MATCHED";
-    return await signInUser(credential.email, password);
+    const session = await signInUser(credential.email, password);
+    await initializeGlobalState();
+    return session;
   } catch (error) {
     if (
       error ==
@@ -89,5 +97,15 @@ export const signIn = async (
       console.log("auth.studentSignIn : ", error);
       throw "There was a problem signing in to your account.";
     }
+  }
+};
+
+export const signOut = async (resetGlobalState: () => void) => {
+  try {
+    await signOutUser();
+    await resetGlobalState();
+  } catch (error) {
+    console.log("auth.signOutUser : ", error);
+    throw "There is a problem logging out your account.";
   }
 };
