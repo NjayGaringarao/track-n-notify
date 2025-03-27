@@ -30,6 +30,12 @@ const StudentUI = () => {
             Program: {userInfo.student_info.dep_prog.split(" - ")[1]} -{" "}
             {userInfo.student_info.year_level} YEAR
           </Text>
+          <Text>
+            Status:{" "}
+            {userInfo.student_info.isLoggedIn
+              ? "INSIDE THE CAMPUS"
+              : "OUTSIDE THE CAMPUS"}
+          </Text>
         </View>
         <ProfilePicture userInfo={userInfo} />
       </View>
