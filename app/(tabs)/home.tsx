@@ -2,9 +2,9 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import image from "@/constants/image";
 import { useGlobalContext } from "@/context/GlobalProvider";
-import StudentUI from "@/components/ui/StudentUI";
-import AdminUI from "@/components/ui/AdminUI";
-import SecurityUI from "@/components/ui/SecurityUI";
+import StudentUI from "@/components/ui/home/StudentUI";
+import AdminUI from "@/components/ui/home/AdminUI";
+import SecurityUI from "@/components/ui/home/SecurityUI";
 
 const home = () => {
   const { user } = useGlobalContext();

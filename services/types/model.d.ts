@@ -1,7 +1,13 @@
+export type GuardianInfo = {
+  name?: string;
+  contact_number?: string;
+};
+
 export type StudentInfo = {
   id: string;
   dep_prog: string;
   year_level: string;
+  guardian_info: GuardianInfo[];
 };
 
 export type AdminInfo = {
@@ -23,8 +29,7 @@ export type UserCredentials = {
 export type User = {
   id: string;
   name: [string, string?, string];
-  address: [string?, string?, string?, string?];
-  birth_date?: Date;
+  picture_id?: string;
   student_info?: StudentInfo;
   admin_info?: AdminInfo;
   security_info?: SecurityInfo;

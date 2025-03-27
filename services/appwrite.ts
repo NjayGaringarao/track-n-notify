@@ -160,7 +160,6 @@ export const generateQR = (student_id: string) => {
       300 // size (optional)
     );
 
-    console.log(result.href);
     return result.href;
   } catch (error) {
     console.log("appwrite.generateQR : ", error);
@@ -186,4 +185,31 @@ export const _executeFunction = async (
   );
 
   return result;
+};
+
+export const getFilePreview = (
+  BUCKET_ID: string,
+  file_ID: string,
+  quality?: number,
+  width?: number,
+  height?: number
+) => {
+  try {
+    const preview_src = appwriteService.storage.getFilePreview(
+      BUCKET_ID,
+      file_ID,
+      width,
+      height,
+      undefined,
+      quality
+    );
+    return preview_src;
+  } catch (error) {
+    console.log(`ERROR (appwrite.ts => getFilePreview) :: ${error}`);
+    throw error;
+  }
+};
+
+export const generateAvatar = (username: string) => {
+  return appwriteService.avatars.getInitials(username).href;
 };

@@ -1,17 +1,11 @@
-import {
-  AdminInfo,
-  StudentInfo,
-  User,
-  UserCredentials,
-} from "@/services/types/model";
+import { User, UserCredentials } from "@/services/types/model";
 import { Models } from "react-native-appwrite";
 
 export const toUserInfo = (document: Models.Document): User => {
   return {
     id: document.$id,
     name: document.name,
-    address: document.address,
-    birth_date: document.birth_date ? new Date(document.dob) : undefined,
+    picture_id: document.picture_id,
     admin_info: document.admin_info,
     student_info: document.student_info,
     security_info: document.security_info,

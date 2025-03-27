@@ -8,13 +8,13 @@ export interface RefreshUserRecordType {
 
 export interface GlobalContextInterface {
   setUser: Dispatch<SetStateAction<Models.User<Models.Preferences> | null>>;
-  setUserInfo: Dispatch<SetStateAction<UserType>>;
+  setUserInfo: Dispatch<SetStateAction<User>>;
   setUserCredential: Dispatch<SetStateAction<UserCredential>>;
   resetGlobalState: () => void;
   refreshUserRecord: (e: RefreshUserRecordType) => Promise<void>;
   initializeGlobalState: () => Promise<void>;
   user: Models.User<Models.Preferences> | null;
-  userInfo: UserType;
+  userInfo: User;
   userCredential: UserCredentialType;
   fcmToken?: string;
   isLoading: boolean;
