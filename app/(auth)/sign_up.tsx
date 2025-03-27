@@ -36,7 +36,7 @@ const sign_up = () => {
     dep_prog: "CCIT-BSCS",
     guardian_info: [],
     year_level: "FIRST",
-    isLoggedIn: true,
+    isLoggedIn: false,
   });
 
   const [adminForm, setAdminForm] = useState<AdminInfo>({
