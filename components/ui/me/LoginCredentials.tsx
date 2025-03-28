@@ -112,7 +112,6 @@ const LoginCredentials = () => {
   return (
     <View className="w-full mb-6">
       <View className="flex-row gap-2 items-center">
-        <AntDesign name="caretright" size={24} color="black" />
         <Text className="text-xl text-uBlack font-black my-2">
           LOGIN CREDENTIALS
         </Text>

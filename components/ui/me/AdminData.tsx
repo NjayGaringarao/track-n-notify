@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const SecurityUI = () => {
+const AdminData = () => {
   return (
     <View>
-      <Text>SecurityUI</Text>
+      <Text>AdminUI</Text>
     </View>
   );
 };
 
-export default SecurityUI;
+export default AdminData;

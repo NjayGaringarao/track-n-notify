@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { confirmAction } from "@/util/common";
 import { useGlobalContext } from "@/context/GlobalProvider";
@@ -8,10 +8,13 @@ import Toast from "react-native-toast-message";
 import Button from "@/components/Button";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import color from "@/constants/color";
-import StudentUI from "@/components/ui/me/StudentUI";
-import AdminUI from "@/components/ui/me/AdminUI";
-import SecurityUI from "@/components/ui/me/SecurityUI";
+import StudentData from "@/components/ui/me/StudentData";
+import AdminData from "@/components/ui/me/AdminData";
+import SecurityData from "@/components/ui/me/SecurityData";
 import image from "@/constants/image";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import ProfileSection from "@/components/ui/me/ProfileSection";
+import LoginCredentials from "@/components/ui/me/LoginCredentials";
 
 const me = () => {
   const { user, userInfo, isInternetConnection, resetGlobalState } =
@@ -50,13 +53,32 @@ const me = () => {
       />
       {user && (
         <View className="absolute w-full h-full">
-          {user.labels[0] === "STUDENT" ? (
-            <StudentUI />
-          ) : user.labels[0] === "ADMINISTRATOR" ? (
-            <AdminUI />
-          ) : (
-            <SecurityUI />
-          )}
+          <View className="flex-1 mx-6">
+            {/** Header */}
+            <View className="flex-row py-4 w-full justify-between items-center border-b-2 border-white">
+              <Text className="text-2xl text-white">USER SETTINGS</Text>
+              <Ionicons name="settings-sharp" size={48} color={color.uBlack} />
+            </View>
+            <ScrollView
+              className="w-full"
+              contentContainerStyle={{
+                alignItems: "stretch",
+                justifyContent: "center",
+                gap: 24,
+              }}
+            >
+              <ProfileSection />
+              {user.labels[0] === "STUDENT" ? (
+                <StudentData />
+              ) : user.labels[0] === "ADMINISTRATOR" ? (
+                <AdminData />
+              ) : (
+                <SecurityData />
+              )}
+              <LoginCredentials />
+            </ScrollView>
+          </View>
+
           <View className="w-full items-end px-4 py-1 border border-t border-primary">
             <Button
               handlePress={signOutHandle}

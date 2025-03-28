@@ -3,8 +3,12 @@ import React from "react";
 
 const StudentData = () => {
   return (
-    <View>
-      <Text>StudentData</Text>
+    <View className="w-full mb-6">
+      <View className="flex-row gap-2 items-center">
+        <Text className="text-xl text-uBlack font-black my-2">
+          STUDENT DATA
+        </Text>
+      </View>
     </View>
   );
 };
