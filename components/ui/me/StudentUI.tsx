@@ -5,6 +5,7 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import ProfileSection from "./ProfileSection";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import color from "@/constants/color";
+import LoginCredentials from "./LoginCredentials";
 
 const StudentUI = () => {
   const { userInfo } = useGlobalContext();
@@ -45,6 +46,7 @@ const StudentUI = () => {
         }}
       >
         <ProfileSection />
+        <LoginCredentials />
       </ScrollView>
     </View>
   );

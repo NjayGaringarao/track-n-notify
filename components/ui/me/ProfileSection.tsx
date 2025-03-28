@@ -11,6 +11,7 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import { Ionicons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import color from "@/constants/color";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const ProfileSection = () => {
   const { userInfo, refreshUserRecord, isInternetConnection } =
@@ -105,6 +106,12 @@ const ProfileSection = () => {
 
   return (
     <View className="gap-2 mt-6">
+      <View className="flex-row gap-2 items-center">
+        <AntDesign name="caretright" size={24} color="black" />
+        <Text className="text-xl text-uBlack font-black my-2">
+          USER PROFILE
+        </Text>
+      </View>
       <View>
         <View className="w-full flex-row gap-4">
           <View className="justify-center items-center gap-1">

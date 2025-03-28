@@ -9,6 +9,7 @@ import color from "@/constants/color";
 import { confirmAction } from "@/util/common";
 import Toast from "react-native-toast-message";
 import { updatePassword } from "@/services/appwrite";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const LoginCredentials = () => {
   const { userCredential, isInternetConnection } = useGlobalContext();
@@ -109,22 +110,20 @@ const LoginCredentials = () => {
   };
 
   return (
-    <View className="w-full">
-      <View className=" w-full px-4 py-4 rounded-xl bg-background shadow-lg shadow-black">
+    <View className="w-full mb-6">
+      <View className="flex-row gap-2 items-center">
+        <AntDesign name="caretright" size={24} color="black" />
         <Text className="text-xl text-uBlack font-black my-2">
-          IV. LOGIN CREDENTIALS
+          LOGIN CREDENTIALS
         </Text>
-
-        <View className="w-full px-4 mx-2 gap-2">
+      </View>
+      <View className="w-full">
+        <View className="w-full gap-2">
           <TextBox
             title="Role"
             textValue={userCredential.role.toUpperCase()}
             placeholder="Unset"
             handleChangeText={() => {}}
-            containerStyles="w-full "
-            titleTextStyles="text-uGray text-base font-semibold"
-            textInputStyles="text-base text-uBlack"
-            boxStyles="w-full bg-white rounded-xl "
             isDisabled
           />
           <TextBox
@@ -133,10 +132,6 @@ const LoginCredentials = () => {
             placeholder="Unset"
             handleChangeText={() => {}}
             isDisabled
-            containerStyles="w-full "
-            titleTextStyles="text-uGray text-base font-semibold"
-            textInputStyles="text-base text-uBlack"
-            boxStyles="w-full bg-white rounded-xl "
             isPassword
           />
           <TextBox
@@ -146,7 +141,6 @@ const LoginCredentials = () => {
             textValue={userCredential.id}
             placeholder="Unset"
             handleChangeText={() => {}}
-            titleTextStyles="text-uBlack"
             isDisabled
             isPassword
           />
@@ -161,7 +155,7 @@ const LoginCredentials = () => {
               titleTextStyles="text-uBlack"
               isPassword
             />
-            <View className="w-full items-end">
+            <View className="w-full">
               <TextBox
                 textValue={form.newPassword}
                 placeholder="New Password"
@@ -182,7 +176,7 @@ const LoginCredentials = () => {
                 should also not be the same with the old password
               </Text>
             </View>
-            <View className="w-full items-end">
+            <View className="w-full">
               <TextBox
                 textValue={form.confPassword}
                 placeholder="Confirm Password"
@@ -208,7 +202,8 @@ const LoginCredentials = () => {
                     isLoading={
                       isLoading ||
                       !Object.values(inputValidity).every(Boolean) ||
-                      !isInternetConnection
+                      !isInternetConnection ||
+                      form.oldPassword.length < 8
                     }
                     containerStyles="bg-uBlack py-1"
                     textStyles="text-white"
