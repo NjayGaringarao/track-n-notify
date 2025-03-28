@@ -8,6 +8,7 @@ import color from "@/constants/color";
 import { confirmAction } from "@/util/common";
 import Toast from "react-native-toast-message";
 import { regex } from "@/constants/regex";
+import { updateGuardianData } from "@/services/user";
 
 const GuardianData = () => {
   const { userInfo, user, isInternetConnection } = useGlobalContext();
@@ -39,8 +40,12 @@ const GuardianData = () => {
       return;
     try {
       setIsLoading(true);
-
-      await Toast.show({
+      await updateGuardianData(
+        user?.$id!,
+        guardianForm.name!,
+        guardianForm.contact_number!
+      );
+      Toast.show({
         type: "success",
         text1: "Update Success",
         text2: `Successfully updated your G/P Information.`,
@@ -130,7 +135,7 @@ const GuardianData = () => {
           <View className="absolute h-full w-full bg-black opacity-80 rounded-xl" />
           <View>
             <Loading
-              loadingPrompt="Updating Student Information"
+              loadingPrompt="Updating G/P Information"
               loadingColor={color.primary}
             />
           </View>

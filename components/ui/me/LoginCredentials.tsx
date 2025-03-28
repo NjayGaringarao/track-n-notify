@@ -224,7 +224,7 @@ const LoginCredentials = () => {
           <View className="absolute h-full w-full bg-black opacity-80 rounded-xl" />
           <View>
             <Loading
-              loadingPrompt="Updating Profile"
+              loadingPrompt="Updating User Credentials"
               loadingColor={color.primary}
             />
           </View>
