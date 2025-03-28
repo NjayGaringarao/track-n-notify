@@ -15,6 +15,7 @@ import image from "@/constants/image";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ProfileSection from "@/components/ui/me/ProfileSection";
 import LoginCredentials from "@/components/ui/me/LoginCredentials";
+import GuardianData from "@/components/ui/me/GuardianData";
 
 const me = () => {
   const { user, userInfo, isInternetConnection, resetGlobalState } =
@@ -69,7 +70,10 @@ const me = () => {
             >
               <ProfileSection />
               {user.labels[0] === "STUDENT" ? (
-                <StudentData />
+                <View className="gap-6">
+                  <StudentData />
+                  <GuardianData />
+                </View>
               ) : user.labels[0] === "ADMINISTRATOR" ? (
                 <AdminData />
               ) : (

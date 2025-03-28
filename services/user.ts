@@ -5,6 +5,7 @@ import {
   uploadFile,
   updateDocument,
   deleteFile,
+  _executeFunction,
 } from "./appwrite";
 import { User, UserCredentials } from "./types/model";
 import { toUserCredential, toUserInfo } from "@/util/dataTransferObject";
@@ -110,6 +111,28 @@ export const updateStudentData = async (
     return result;
   } catch (error) {
     console.log(`user.updateStudentData : ${error}`);
+    throw error;
+  }
+};
+
+export const updateGuardianData = async (
+  user_id: string,
+  name: string,
+  contact_number: string
+) => {
+  try {
+    const result = await _executeFunction(
+      env.FUNCTION_ACCOUNT,
+      "updateGuardian",
+      {
+        id: user_id,
+        name: name,
+        contact_number: contact_number,
+      }
+    );
+    if (result.responseStatusCode != 200) throw "a";
+  } catch (error) {
+    console.log(`user.updateGuardianData : ${error}`);
     throw error;
   }
 };

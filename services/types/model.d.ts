@@ -7,7 +7,7 @@ export type StudentInfo = {
   id: string;
   dep_prog: string;
   year_level: string;
-  guardian_info: GuardianInfo[];
+  guardian_info: GuardianInfo;
   isLoggedIn?: boolean;
 };
 
