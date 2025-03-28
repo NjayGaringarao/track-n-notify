@@ -90,3 +90,26 @@ export const updateProfile = async (
     throw error;
   }
 };
+
+export const updateStudentData = async (
+  user_id: string,
+  dep_prog: string,
+  year_level: string
+) => {
+  try {
+    const result = await updateDocument(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_STUDENT_INFO,
+      user_id,
+      {
+        dep_prog: dep_prog,
+        year_level: year_level,
+      }
+    );
+
+    return result;
+  } catch (error) {
+    console.log(`user.updateStudentData : ${error}`);
+    throw error;
+  }
+};

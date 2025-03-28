@@ -22,7 +22,12 @@ const StudentUI = () => {
 
       <View className="flex-row w-full my-10 text-base justify-between items-center">
         <View className="gap-2">
-          <Text>Name: {user.name}</Text>
+          <Text>
+            Name:{" "}
+            {userInfo.name[1]
+              ? `${userInfo.name[0]} ${userInfo.name[1]} ${userInfo.name[2]}`
+              : `${userInfo.name[0]} ${userInfo.name[2]}`}
+          </Text>
           <Text>
             Department: {userInfo.student_info.dep_prog.split(" - ")[0]}
           </Text>
