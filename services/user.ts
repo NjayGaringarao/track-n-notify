@@ -1,7 +1,15 @@
 import { env } from "@/constants/env";
-import { getDocument } from "./appwrite";
+import {
+  getDocument,
+  updateFile,
+  uploadFile,
+  updateDocument,
+  deleteFile,
+} from "./appwrite";
 import { User, UserCredentials } from "./types/model";
 import { toUserCredential, toUserInfo } from "@/util/dataTransferObject";
+import { ImagePickerAsset } from "expo-image-picker";
+import { Models } from "react-native-appwrite";
 
 export const getUserInfo = async (user_id: string): Promise<User> => {
   try {
@@ -31,6 +39,54 @@ export const getUserCredential = async (
     return toUserCredential(result);
   } catch (error) {
     console.log(`user.getUserCredential : ${error}`);
+    throw error;
+  }
+};
+
+export const updateProfile = async (
+  user_id: string,
+  name: [string | undefined, string | undefined, string | undefined],
+  newProfilePicture?: ImagePickerAsset
+) => {
+  let pictureFile: Models.File | undefined = undefined;
+  try {
+    if (newProfilePicture) {
+      pictureFile = await uploadFile(env.BUCKET_IMAGE, {
+        name: newProfilePicture.fileName!,
+        type: newProfilePicture.mimeType!,
+        size: newProfilePicture.fileSize!,
+        uri: newProfilePicture.uri!,
+      });
+
+      const execution = await updateDocument(
+        env.DATABASE_PRIMARY,
+        env.COLLECTION_USER,
+        user_id,
+        {
+          picture_id: pictureFile.$id,
+          name: name,
+        }
+      );
+
+      await updateFile(env.BUCKET_IMAGE, pictureFile.$id, {
+        name: `User Image ${user_id}`,
+      });
+
+      return execution;
+    } else {
+      return await updateDocument(
+        env.DATABASE_PRIMARY,
+        env.COLLECTION_USER,
+        user_id,
+        {
+          name: name,
+        }
+      );
+    }
+  } catch (error) {
+    console.log(`ERROR : (userServices.ts => updateProfile) :: ${error}`);
+
+    await deleteFile(env.BUCKET_IMAGE, pictureFile?.$id!).catch();
     throw error;
   }
 };

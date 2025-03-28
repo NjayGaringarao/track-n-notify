@@ -56,6 +56,30 @@ export const createUserAccount = async (
   }
 };
 
+export const updatePassword = async (
+  oldPassword: string,
+  newPassword: string
+) => {
+  try {
+    return await appwriteService.account.updatePassword(
+      newPassword,
+      oldPassword
+    );
+  } catch (error) {
+    console.log(`appwrite._updatePassword : ${error}`);
+    if (
+      error ==
+        "AppwriteException: Invalid `oldPassword` param: Password must be between 8 and 256 characters long." ||
+      error ==
+        "AppwriteException: Invalid credentials. Please check the email and password."
+    ) {
+      throw Error("Incorrect old password.");
+    } else {
+      throw Error("There was a problem updating your password");
+    }
+  }
+};
+
 export const signInUser = async (email: string, password: string) => {
   try {
     const session = await appwriteService.account.createEmailPasswordSession(
@@ -153,6 +177,26 @@ export const listDocuments = async (
   }
 };
 
+export const updateDocument = async (
+  DATABASE_ID: string,
+  COLLECTION_ID: string,
+  document_ID: string,
+  data: object
+) => {
+  try {
+    const result = await appwriteService.database.updateDocument(
+      DATABASE_ID,
+      COLLECTION_ID,
+      document_ID,
+      data
+    );
+    return result;
+  } catch (error) {
+    console.log(`appwrite.updateDocument : ${error}`);
+    throw error;
+  }
+};
+
 export const generateQR = (student_id: string) => {
   try {
     const result = appwriteService.avatars.getQR(
@@ -205,7 +249,60 @@ export const getFilePreview = (
     );
     return preview_src;
   } catch (error) {
-    console.log(`ERROR (appwrite.ts => getFilePreview) :: ${error}`);
+    console.log(`appwrite.getFilePreview : ${error}`);
+    throw error;
+  }
+};
+
+export const uploadFile = async (
+  BUCKET_ID: string,
+  asset: {
+    name: string;
+    type: string;
+    size: number;
+    uri: string;
+  },
+  file_ID?: string
+) => {
+  console.log(asset.uri);
+  try {
+    const uploadedFile = await appwriteService.storage.createFile(
+      BUCKET_ID,
+      file_ID ? file_ID : ID.unique(),
+      asset
+    );
+    return uploadedFile;
+  } catch (error) {
+    console.log(`appwrite.uploadFile : ${error}`);
+    throw error;
+  }
+};
+
+export const updateFile = async (
+  BUCKET_ID: string,
+  file_ID: string,
+  data: {
+    name?: string;
+    permissions?: string[];
+  }
+) => {
+  try {
+    await appwriteService.storage.updateFile(
+      BUCKET_ID,
+      file_ID,
+      data.name,
+      data.permissions
+    );
+  } catch (error) {
+    console.log(`appwrite.updateFile : ${error}`);
+  }
+};
+
+export const deleteFile = async (BUCKET_ID: string, file_ID: string) => {
+  try {
+    await appwriteService.storage.deleteFile(BUCKET_ID, file_ID);
+  } catch (error) {
+    console.log(`appwrite.deleteFile : ${error}`);
     throw error;
   }
 };
