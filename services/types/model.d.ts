@@ -1,13 +1,8 @@
-export type GuardianInfo = {
-  name?: string;
-  contact_number?: string;
-};
-
 export type StudentInfo = {
   id: string;
   dep_prog: string;
   year_level: string;
-  guardian_info: GuardianInfo;
+  guardian_name: string;
   isLoggedIn?: boolean;
 };
 

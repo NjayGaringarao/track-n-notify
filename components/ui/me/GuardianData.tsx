@@ -7,20 +7,25 @@ import Loading from "@/components/Loading";
 import color from "@/constants/color";
 import { confirmAction } from "@/util/common";
 import Toast from "react-native-toast-message";
+import { regex } from "@/constants/regex";
 
 const GuardianData = () => {
-  const { userInfo, isInternetConnection } = useGlobalContext();
+  const { userInfo, user, isInternetConnection } = useGlobalContext();
   const [isModified, setIsModified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [guardianForm, setGuardianForm] = useState({
-    name: userInfo.student_info?.guardian_info.name,
-    contact_number: userInfo.student_info?.guardian_info.contact_number,
+    name: userInfo.student_info?.guardian_name,
+    contact_number: user?.targets.find(
+      (target) => target.providerType === "sms"
+    )?.identifier,
   });
 
   const clearHandle = () => {
     setGuardianForm({
-      name: userInfo.student_info?.guardian_info.name,
-      contact_number: userInfo.student_info?.guardian_info.contact_number,
+      name: userInfo.student_info?.guardian_name,
+      contact_number: user?.targets.find(
+        (target) => target.providerType === "sms"
+      )?.identifier,
     });
   };
 
@@ -54,15 +59,12 @@ const GuardianData = () => {
   };
 
   useEffect(() => {
-    if (
-      userInfo &&
-      userInfo.student_info &&
-      userInfo.student_info.guardian_info
-    ) {
+    if (userInfo && userInfo.student_info && user) {
       if (
-        guardianForm.name !== userInfo.student_info.guardian_info.name ||
+        guardianForm.name !== userInfo.student_info.guardian_name ||
         guardianForm.contact_number !==
-          userInfo.student_info.guardian_info.contact_number
+          user.targets.find((target) => target.providerType === "sms")
+            ?.identifier!
       ) {
         setIsModified(true);
       } else {
@@ -93,7 +95,7 @@ const GuardianData = () => {
         <TextBox
           textValue={guardianForm.contact_number!}
           title="Mobile Number"
-          placeholder="09123456789"
+          placeholder="+639123456789"
           handleChangeText={(e) =>
             setGuardianForm({
               ...guardianForm,
@@ -111,11 +113,7 @@ const GuardianData = () => {
             containerStyles="bg-uBlack py-1"
             isLoading={
               !isInternetConnection ||
-              !(
-                guardianForm.contact_number &&
-                guardianForm.contact_number.length == 11
-              ) ||
-              isNaN(Number(guardianForm.contact_number))
+              !regex.mobile.test(guardianForm.contact_number!)
             }
             textStyles="text-white"
           />
