@@ -38,8 +38,7 @@
         "react-native-vision-camera",
         {
           "cameraPermissionText": "Track n' Notify needs access to your Camera.",
-          "enableMicrophonePermission": true,
-          "microphonePermissionText": "Track n' Notify needs access to your Microphone."
+          "enableCodeScanner": true
         }
       ]
     ],
