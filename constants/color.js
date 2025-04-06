@@ -1,6 +1,6 @@
 export default {
   primary: "#87CEFC",
-  background: "#FBF5DD",
+  background: "#fff",
   secondary: "#16404D",
   panel: "#A6CDC6",
   uBlack: "#1f2937",
