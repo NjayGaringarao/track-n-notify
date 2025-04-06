@@ -3,7 +3,7 @@ import Loading from "@/components/Loading";
 import ProfilePicture from "@/components/ProfilePicture";
 import color from "@/constants/color";
 import { User } from "@/services/types/model";
-import { getUserInfo } from "@/services/user";
+import { getUserInfo, updateStudentStatus } from "@/services/user";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { Modal, View, Text, Pressable } from "react-native";
@@ -26,6 +26,7 @@ export function ModalStudentStatus({
   const [fetchError, setFetchError] = useState<string | undefined>();
   const [time, setTime] = useState<Date>(new Date());
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
+
   const closeHandle = () => {
     setIsLoading(true);
     setStudentData(undefined);
@@ -47,6 +48,22 @@ export function ModalStudentStatus({
       setStudentData(await getUserInfo(id));
     } catch (error) {
       setFetchError(`${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdateStatus = async () => {
+    try {
+      setIsLoading(true);
+      await updateStudentStatus(
+        studentData?.id!,
+        !studentData?.student_info?.isLoggedIn,
+        time
+      );
+
+      closeHandle();
+    } catch (error) {
     } finally {
       setIsLoading(false);
     }
@@ -89,9 +106,11 @@ export function ModalStudentStatus({
                 </View>
               </View>
               <View className="w-full flex-row">
+                {/** Enable the pressable if required */}
                 <Pressable
                   onPress={() => setIsTimePickerVisible(true)}
                   className="flex-1 flex-row justify-between border border-primary px-4 py-2 rounded-lg"
+                  disabled={true}
                 >
                   <View className="flex-1 flex-row gap-4 ">
                     <Text className="text-uBlack text-lg">Log Time :</Text>
@@ -128,9 +147,12 @@ export function ModalStudentStatus({
                   title={
                     studentData.student_info?.isLoggedIn ? "Logout" : "Login"
                   }
-                  handlePress={() => {}}
+                  handlePress={handleUpdateStatus}
                   containerStyles="flex-1 bg-uBlack"
                   textStyles={`text-white`}
+                  isLoading={
+                    !studentData || !studentData.student_info || isLoading
+                  }
                 />
               </View>
             </View>

@@ -22,8 +22,15 @@ export const getUserInfo = async (user_id: string): Promise<User> => {
 
     return toUserInfo(result);
   } catch (error) {
-    console.log(`user.getUserInfo : ${error}`);
-    throw error;
+    if (
+      error ==
+      "AppwriteException: Document with the requested ID could not be found."
+    ) {
+      throw "User ID is not registered in Track n' Notify";
+    } else {
+      console.log(`user.getUserInfo : ${error}`);
+      throw error;
+    }
   }
 };
 
@@ -133,6 +140,29 @@ export const updateGuardianData = async (
     if (result.responseStatusCode != 200) throw "a";
   } catch (error) {
     console.log(`user.updateGuardianData : ${error}`);
+    throw error;
+  }
+};
+
+export const updateStudentStatus = async (
+  user_id: string,
+  isLoggedIn: boolean,
+  time: Date
+) => {
+  try {
+    const result = await _executeFunction(
+      env.FUNCTION_INOUT,
+      "updateStudentStatus",
+      {
+        id: user_id,
+        isLoggedIn: isLoggedIn,
+        log_time: time,
+      }
+    );
+
+    if (result.responseStatusCode != 200) throw "a";
+  } catch (error) {
+    console.log(`user.updateStudentStatus : ${error}`);
     throw error;
   }
 };
