@@ -10,7 +10,6 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import color from "@/constants/color";
 import StudentData from "@/components/ui/me/StudentData";
 import AdminData from "@/components/ui/me/AdminData";
-import SecurityData from "@/components/ui/me/SecurityData";
 import image from "@/constants/image";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ProfileSection from "@/components/ui/me/ProfileSection";
@@ -76,9 +75,7 @@ const me = () => {
                 </View>
               ) : user.labels[0] === "ADMINISTRATOR" ? (
                 <AdminData />
-              ) : (
-                <SecurityData />
-              )}
+              ) : null}
               <LoginCredentials />
             </ScrollView>
           </View>
