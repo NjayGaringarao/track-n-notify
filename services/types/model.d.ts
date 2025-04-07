@@ -3,7 +3,7 @@ export type StudentInfo = {
   dep_prog: string;
   year_level: string;
   guardian_name: string;
-  isLoggedIn?: boolean;
+  isInside?: boolean;
 };
 
 export type AdminInfo = {

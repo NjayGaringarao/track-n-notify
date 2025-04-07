@@ -71,7 +71,7 @@ const StudentUI = () => {
           <View className="flex-row justify-between items-center py-4 px-6">
             <View className="-gap-2">
               <Text className="text-2xl font-semibold text-uBlack ">
-                {userInfo.student_info.isLoggedIn
+                {userInfo.student_info.isInside
                   ? "INSIDE THE CAMPUS"
                   : "OUTSIDE THE CAMPUS"}
               </Text>

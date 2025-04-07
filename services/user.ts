@@ -146,7 +146,7 @@ export const updateGuardianData = async (
 
 export const updateStudentStatus = async (
   user_id: string,
-  isLoggedIn: boolean,
+  isInside: boolean,
   time: Date
 ) => {
   try {
@@ -155,7 +155,7 @@ export const updateStudentStatus = async (
       "updateStudentStatus",
       {
         id: user_id,
-        isLoggedIn: isLoggedIn,
+        isInside: isInside,
         log_time: time,
       }
     );

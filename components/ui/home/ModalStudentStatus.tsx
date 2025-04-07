@@ -59,7 +59,7 @@ export function ModalStudentStatus({
       setIsSubmitting(true);
       await updateStudentStatus(
         studentData?.id!,
-        !studentData?.student_info?.isLoggedIn,
+        !studentData?.student_info?.isInside,
         time
       );
 
@@ -139,14 +139,12 @@ export function ModalStudentStatus({
                 <Text className="text-uBlack text-lg">
                   Status:{" "}
                   <Text className="font-semibold">
-                    {studentData.student_info?.isLoggedIn
-                      ? "INSIDE"
-                      : "OUTSIDE"}
+                    {studentData.student_info?.isInside ? "INSIDE" : "OUTSIDE"}
                   </Text>
                 </Text>
                 <Button
                   title={
-                    studentData.student_info?.isLoggedIn ? "Logout" : "Login"
+                    studentData.student_info?.isInside ? "Logout" : "Login"
                   }
                   handlePress={handleUpdateStatus}
                   containerStyles="flex-1 bg-uBlack"

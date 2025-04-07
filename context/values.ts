@@ -4,8 +4,6 @@ import { GlobalContextInterface } from "./context";
 export const emptyUserInfo: User = {
   id: "",
   name: ["", "", ""],
-  address: ["", ""],
-  birth_date: new Date(0),
 };
 
 export const emptyUserCredential: UserCredentials = {
