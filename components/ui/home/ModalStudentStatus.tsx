@@ -23,6 +23,7 @@ export function ModalStudentStatus({
 }: ModalStudentStatusProps) {
   const [studentData, setStudentData] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [fetchError, setFetchError] = useState<string | undefined>();
   const [time, setTime] = useState<Date>(new Date());
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
@@ -55,7 +56,7 @@ export function ModalStudentStatus({
 
   const handleUpdateStatus = async () => {
     try {
-      setIsLoading(true);
+      setIsSubmitting(true);
       await updateStudentStatus(
         studentData?.id!,
         !studentData?.student_info?.isLoggedIn,
@@ -65,7 +66,7 @@ export function ModalStudentStatus({
       closeHandle();
     } catch (error) {
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -183,6 +184,17 @@ export function ModalStudentStatus({
               <View>
                 <Loading
                   loadingPrompt="Fetching Student Info"
+                  loadingColor={color.primary}
+                />
+              </View>
+            </View>
+          )}
+          {isSubmitting && (
+            <View className="absolute h-full w-full items-center justify-center">
+              <View className="absolute h-full w-full bg-black rounded-xl" />
+              <View>
+                <Loading
+                  loadingPrompt="Updating Student Status"
                   loadingColor={color.primary}
                 />
               </View>
