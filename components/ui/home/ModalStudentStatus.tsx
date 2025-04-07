@@ -110,12 +110,18 @@ export function ModalStudentStatus({
                 {/** Enable the pressable if required */}
                 <Pressable
                   onPress={() => setIsTimePickerVisible(true)}
-                  className="flex-1 flex-row justify-between border border-primary px-4 py-2 rounded-lg"
+                  className="flex-1 flex-row justify-between border border-primary py-1 rounded-lg"
                   disabled={true}
                 >
-                  <View className="flex-1 flex-row gap-4 ">
-                    <Text className="text-uBlack text-lg">Log Time :</Text>
-                    <Text className="font-semibold text-uBlack text-lg">
+                  <View className="flex-1 flex-row items-center">
+                    <Text className="text-uGray text-lg px-4">LOG TIME </Text>
+                    <Text
+                      className="text-uBlack text-3xl flex-1 text-center border-l border-primary"
+                      style={{
+                        fontFamily: "Digital",
+                        letterSpacing: 1,
+                      }}
+                    >
                       {time.toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
@@ -123,7 +129,7 @@ export function ModalStudentStatus({
                       })}
                     </Text>
                   </View>
-                  <AntDesign name="caretdown" size={18} color={color.uBlack} />
+                  {/* <AntDesign name="caretdown" size={18} color={color.uBlack} /> */}
                 </Pressable>
               </View>
               {isTimePickerVisible && (
