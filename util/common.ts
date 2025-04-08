@@ -88,7 +88,9 @@ export const getHTMLImageRender = (
         </style>
       </head>
       <body>
-        <img src="${preview_src}" alt="Full Screen Image" />
+        <img src="${
+          typeof preview_src === "string" && encodeURI(preview_src)
+        }" alt="Full Screen Image" />
       </body>
     </html>
   `;

@@ -27,6 +27,7 @@ export function ModalStudentStatus({
   const [fetchError, setFetchError] = useState<string | undefined>();
   const [time, setTime] = useState<Date>(new Date());
   const [isTimePickerVisible, setIsTimePickerVisible] = useState(false);
+  const [isImagePreviewVisible, setIsImagePreviewVisible] = useState(false);
 
   const closeHandle = () => {
     setIsLoading(true);
@@ -92,6 +93,7 @@ export function ModalStudentStatus({
                 <ProfilePicture
                   userInfo={studentData}
                   containerStyle="shadow-none"
+                  onPress={() => setIsImagePreviewVisible(true)}
                 />
                 <View className="flex-1 px-4">
                   <Text
