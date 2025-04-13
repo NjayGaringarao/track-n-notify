@@ -58,13 +58,14 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setUserCredential(_userCredentials);
 
         console.log("User role:", currentUser.labels[0]!);
-        router.navigate("/home");
+        router.replace("/home");
       } else {
         setUser(null);
         router.replace("/");
       }
     } catch (error) {
       console.log(error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +108,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     setUserInfo(emptyUserInfo);
     setUserCredential(emptyUserCredential);
-
+    router.replace("/");
     setIsLoading(false);
   };
 

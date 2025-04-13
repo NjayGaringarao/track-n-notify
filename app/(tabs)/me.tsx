@@ -33,7 +33,6 @@ const me = () => {
       }
       setIsLoading(true);
       await signOut(resetGlobalState);
-      router.navigate("/");
     } catch (error) {
       Toast.show({
         type: "error",

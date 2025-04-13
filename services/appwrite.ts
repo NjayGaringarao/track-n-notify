@@ -89,6 +89,7 @@ export const signInUser = async (email: string, password: string) => {
     return session;
   } catch (error) {
     console.log("appwrite.signInUser : ", error);
+    throw error;
   }
 };
 

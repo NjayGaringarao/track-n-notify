@@ -32,20 +32,19 @@ const sign_up = () => {
   });
 
   const [studentForm, setStudentForm] = useState<StudentInfo>({
-    id: "",
+    $id: "",
     dep_prog: "CCIT-BSCS",
-    guardian_info: [],
     year_level: "FIRST",
-    isLoggedIn: false,
+    guardian_name: "",
   });
 
   const [adminForm, setAdminForm] = useState<AdminInfo>({
-    id: "",
+    $id: "",
     department: "REGISTRAR",
   });
 
   const [securityForm, setSecurityForm] = useState<SecurityInfo>({
-    id: "",
+    $id: "",
     type: "GATE-KEEPER",
   });
 
@@ -63,19 +62,18 @@ const sign_up = () => {
       confPassword: "",
     });
     setStudentForm({
-      id: "",
+      $id: "",
       dep_prog: "CCIT-BSCS",
-      guardian_info: [],
       year_level: "FIRST",
-      isLoggedIn: true,
+      guardian_name: "",
     });
     setAdminForm({
-      id: "",
+      $id: "",
       department: "REGISTRAR",
     });
 
     setSecurityForm({
-      id: "",
+      $id: "",
       type: "GATE-KEEPER",
     });
     setAccountType("STUDENT");
@@ -91,7 +89,7 @@ const sign_up = () => {
       return false;
     }
 
-    if (accountType == "STUDENT" && studentForm.id.length != 11) {
+    if (accountType == "STUDENT" && studentForm.$id.length != 11) {
       Toast.show({
         type: "error",
         text1: "Invalid Student ID",
@@ -100,7 +98,7 @@ const sign_up = () => {
       return false;
     }
 
-    if (accountType == "ADMINISTRATOR" && adminForm.id.length == 0) {
+    if (accountType == "ADMINISTRATOR" && adminForm.$id.length == 0) {
       Toast.show({
         type: "error",
         text1: "Invalid Employee ID",
@@ -109,7 +107,7 @@ const sign_up = () => {
       return false;
     }
 
-    if (accountType == "SECURITY" && securityForm.id.length == 0) {
+    if (accountType == "SECURITY" && securityForm.$id.length == 0) {
       Toast.show({
         type: "error",
         text1: "Invalid Employee ID",
@@ -149,11 +147,11 @@ const sign_up = () => {
     if (
       await isUserIdExisting(
         accountType === "STUDENT"
-          ? studentForm.id
+          ? studentForm.$id
           : accountType === "ADMINISTRATOR"
-          ? adminForm.id
+          ? adminForm.$id
           : accountType === "SECURITY"
-          ? securityForm.id
+          ? securityForm.$id
           : ""
       )
     ) {
@@ -311,11 +309,11 @@ const sign_up = () => {
                   </Text>
                   <View className="w-full pl-4 gap-2">
                     <TextBox
-                      textValue={studentForm.id}
+                      textValue={studentForm.$id}
                       title="Student ID"
                       placeholder="xx-x-x-xxxx"
                       handleChangeText={(e) =>
-                        setStudentForm({ ...studentForm, id: e })
+                        setStudentForm({ ...studentForm, $id: e })
                       }
                       titleTextStyles="text-white"
                     />
@@ -365,11 +363,11 @@ const sign_up = () => {
                   </Text>
                   <View className="w-full pl-4 gap-2">
                     <TextBox
-                      textValue={adminForm.id}
+                      textValue={adminForm.$id}
                       title="Employee ID"
                       placeholder="xx-x-x-xxxx"
                       handleChangeText={(e) =>
-                        setAdminForm({ ...adminForm, id: e })
+                        setAdminForm({ ...adminForm, $id: e })
                       }
                       titleTextStyles="text-white"
                     />
@@ -382,10 +380,7 @@ const sign_up = () => {
                         }
                         containerStyle="flex-1 border-2 border-primary rounded-xl bg-white"
                       >
-                        <Picker.Item label="Registrar" value="REGISTRAR" />
-                        <Picker.Item label="OSAS" value="OSAS" />
                         <Picker.Item label="CCIT Faculty" value="CCIT" />
-                        <Picker.Item label="CTE Faculty" value="CTE" />
                         <Picker.Item label="CTE Faculty" value="CTE" />
                         <Picker.Item label="CBAPA Faculty" value="CBAPA" />
                       </ItemPicker>
@@ -402,11 +397,11 @@ const sign_up = () => {
                   </Text>
                   <View className="w-full pl-4 gap-2">
                     <TextBox
-                      textValue={securityForm.id}
+                      textValue={securityForm.$id}
                       title="Employee ID"
                       placeholder="xx-x-x-xxxx"
                       handleChangeText={(e) =>
-                        setSecurityForm({ ...securityForm, id: e })
+                        setSecurityForm({ ...securityForm, $id: e })
                       }
                       titleTextStyles="text-white"
                     />

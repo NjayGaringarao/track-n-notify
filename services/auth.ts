@@ -21,7 +21,7 @@ export const signUp = async ({
         env.FUNCTION_ACCOUNT,
         "createStudentAccount",
         {
-          id: role_info.id,
+          id: role_info.$id,
           name: name,
           dep_prog: (role_info as StudentInfo).dep_prog,
           year_level: (role_info as StudentInfo).year_level,
@@ -35,7 +35,7 @@ export const signUp = async ({
         env.FUNCTION_ACCOUNT,
         "createAdministratorAccount",
         {
-          id: role_info.id,
+          id: role_info.$id,
           name: name,
           department: (role_info as AdminInfo).department,
           email: email,
@@ -48,7 +48,7 @@ export const signUp = async ({
         env.FUNCTION_ACCOUNT,
         "createSecurityAccount",
         {
-          id: role_info.id,
+          id: role_info.$id,
           name: name,
           type: (role_info as SecurityInfo).type,
           email: email,
@@ -90,7 +90,8 @@ export const signIn = async (
       throw "ID does not matched with the role.";
     } else if (
       error ==
-      "AppwriteException: Invalid credentials. Please check the email and password."
+        "AppwriteException: Invalid credentials. Please check the email and password." ||
+      "AppwriteException: Invalid `password` param: Password must be between 8 and 256 characters long."
     ) {
       throw "Incorrect password.";
     } else {

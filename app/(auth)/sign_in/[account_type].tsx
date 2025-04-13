@@ -9,6 +9,7 @@ import Loading from "@/components/Loading";
 import Toast from "react-native-toast-message";
 import { signIn } from "@/services/auth";
 import { useGlobalContext } from "@/context/GlobalProvider";
+import { regex } from "@/constants/regex";
 
 const sign_in = () => {
   const { initializeGlobalState } = useGlobalContext();
@@ -103,7 +104,9 @@ const sign_in = () => {
                 title="Sign In"
                 handlePress={signInHandle}
                 containerStyles="mt-4"
-                isLoading={!form.password.length || !form.user_id.length}
+                isLoading={
+                  !regex.password.test(form.password) || !form.user_id.length
+                }
               />
             </View>
           </View>
