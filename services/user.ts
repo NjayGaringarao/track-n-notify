@@ -166,3 +166,20 @@ export const updateStudentStatus = async (
     throw error;
   }
 };
+
+export const updateAdminData = async (user_id: string, department: string) => {
+  try {
+    const result = await updateDocument(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_ADMIN_INFO,
+      user_id,
+      {
+        department: department,
+      }
+    );
+    return result;
+  } catch (error) {
+    console.log(`user.updateAdminStatus : ${error}`);
+    throw error;
+  }
+};
