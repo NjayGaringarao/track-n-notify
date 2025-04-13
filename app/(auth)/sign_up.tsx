@@ -374,7 +374,7 @@ const sign_up = () => {
                     <View className="w-full">
                       <Text className="text-white">Set Department</Text>
                       <ItemPicker
-                        value={studentForm.dep_prog}
+                        value={adminForm.department}
                         onChange={(value) =>
                           setAdminForm({ ...adminForm, department: value })
                         }
