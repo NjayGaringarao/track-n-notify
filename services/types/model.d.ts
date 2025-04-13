@@ -1,18 +1,19 @@
 export type StudentInfo = {
-  id: string;
+  $id: string;
   dep_prog: string;
   year_level: string;
   guardian_name: string;
+  guardian_salutation?: string;
   isInside?: boolean;
 };
 
 export type AdminInfo = {
-  id: string;
+  $id: string;
   department: string;
 };
 
 export type SecurityInfo = {
-  id: string;
+  $id: string;
   type: string;
 };
 

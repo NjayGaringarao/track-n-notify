@@ -105,12 +105,12 @@ const ProfilePicturePicker = forwardRef(
               </TouchableOpacity>
             )}
             <TouchableOpacity
-              className="bg-panel rounded-lg overflow-hidden shadow shadow-black"
+              className="bg-panel rounded-lg overflow-hidden shadow shadow-black p-1"
               onPress={pickImagehandle}
             >
               <FontAwesome5
                 name="exchange-alt"
-                size={24}
+                size={20}
                 color={color.uBlack}
               />
             </TouchableOpacity>

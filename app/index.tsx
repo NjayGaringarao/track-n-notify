@@ -15,20 +15,20 @@ export default function Index() {
         source={image.school_bg}
         resizeMode="cover"
       />
-      <View className="absolute h-full w-full bg-primary opacity-50" />
+      <View className="absolute h-full w-full bg-uBlack opacity-50" />
       <View className="absolute h-full w-full justify-between items-center">
         {/** Branding */}
-        <View className="flex-1 items-center justify-center">
+        <View className="flex-1 items-center justify-center gap-2">
           <View className="p-6 bg-white rounded-xl items-center justify-center gap-4">
             <Image
               className="w-40 h-40"
               source={image.qr_sample}
               resizeMode="contain"
             />
-            <Text className="text-3xl text-primary font-black">
-              Track N' Notify
-            </Text>
           </View>
+          <Text className="text-3xl text-primary font-black">
+            Track N' Notify
+          </Text>
         </View>
 
         {/** Options */}
