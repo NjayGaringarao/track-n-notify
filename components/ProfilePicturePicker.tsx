@@ -88,9 +88,12 @@ const ProfilePicturePicker = forwardRef(
         <TouchableOpacity
           onPress={() => setIsImagePreviewVisible(true)}
           onLongPress={pickImagehandle}
-          className={`${containerStyle}`}
+          className={`border rounded-md bg-primary shadow-md shadow-black items-center justify-center ${containerStyle}`}
         >
-          <Image className={imageStyle} source={{ uri: imageSource }} />
+          <Image
+            className={`w-3/4 h-3/4 bg-black rounded-full ${imageStyle}`}
+            source={{ uri: imageSource }}
+          />
           <View className="absolute -top-2 -right-2 gap-2">
             {!!newProfilePicture && (
               <TouchableOpacity

@@ -10,6 +10,7 @@ const customToastConfig = {
         height: 72,
         width: "100%",
         paddingHorizontal: 16,
+        marginTop: 16,
       }}
     >
       <View
@@ -60,6 +61,7 @@ const customToastConfig = {
         height: 72,
         width: "100%",
         paddingHorizontal: 16,
+        marginTop: 16,
       }}
     >
       <View

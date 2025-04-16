@@ -110,7 +110,7 @@ const LoginCredentials = () => {
   };
 
   return (
-    <View className="w-full mb-6">
+    <View className="w-full mb-20">
       <View className="flex-row gap-2 items-center">
         <Text className="text-xl text-uBlack font-black my-2">
           LOGIN CREDENTIALS

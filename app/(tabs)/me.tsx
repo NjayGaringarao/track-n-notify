@@ -54,9 +54,11 @@ const me = () => {
         <View className="absolute w-full h-full">
           <View className="flex-1 mx-6">
             {/** Header */}
-            <View className="flex-row py-4 w-full justify-between items-center border-b-2 border-white">
-              <Text className="text-2xl text-white">USER SETTINGS</Text>
-              <Ionicons name="settings-sharp" size={48} color={color.uBlack} />
+            <View className="flex-row py-2 w-full justify-between items-center border-b-2 border-white">
+              <Text className="text-2xl text-white font-medium">
+                USER SETTINGS
+              </Text>
+              <Ionicons name="settings-sharp" size={48} color={color.white} />
             </View>
             <ScrollView
               className="w-full"
@@ -79,18 +81,25 @@ const me = () => {
             </ScrollView>
           </View>
 
-          <View className="w-full items-end px-4 py-1 border border-t border-primary">
-            <Button
-              handlePress={signOutHandle}
-              isLoading={!isInternetConnection}
-            >
-              <View className="flex-row justify-center items-center gap-2">
-                <FontAwesome5 name="power-off" size={24} color={color.uBlack} />
-                <Text className="text-lg font-semibold text-uBlack">
-                  Sign Out
-                </Text>
-              </View>
-            </Button>
+          <View className="absolute bottom-0 w-full">
+            <View className="absolute w-full h-full bg-white opacity-80"></View>
+            <View className="w-full items-end px-4 py-4">
+              <Button
+                handlePress={signOutHandle}
+                isLoading={!isInternetConnection}
+              >
+                <View className="flex-row justify-center items-center gap-2">
+                  <FontAwesome5
+                    name="power-off"
+                    size={24}
+                    color={color.uBlack}
+                  />
+                  <Text className="text-lg font-semibold text-uBlack">
+                    Sign Out
+                  </Text>
+                </View>
+              </Button>
+            </View>
           </View>
         </View>
       )}

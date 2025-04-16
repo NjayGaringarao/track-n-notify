@@ -63,7 +63,7 @@ const SecurityUI = () => {
   return (
     <View className="flex-1 mx-6">
       {/* Header */}
-      <View className="flex-row py-4 w-full justify-between items-center border-b-2 border-white">
+      <View className="flex-row py-2 w-full justify-between items-center border-b-2 border-white">
         <Text className="text-2xl text-white">SECURITY</Text>
         <Image
           source={image.prmsu}

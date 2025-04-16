@@ -4,6 +4,9 @@ import radiant_bg from "@/assets/images/background/radiant_bg.jpg";
 import school_bg from "@/assets/images/background/school_bg.jpg";
 import qr_sample from "@/assets/images/qr_code.jpg";
 import prmsu from "@/assets/images/prmsu.png";
+import ccit from "@/assets/images/ccit.png";
+import cte from "@/assets/images/cte.png";
+import cbapa from "@/assets/images/cbapa.png";
 
 export default {
   app_logo,
@@ -12,4 +15,7 @@ export default {
   school_bg,
   qr_sample,
   prmsu,
+  ccit,
+  cte,
+  cbapa,
 };

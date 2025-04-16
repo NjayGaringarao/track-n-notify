@@ -37,48 +37,51 @@ const LogItem = ({ item }: ILogItemType) => {
   }, [item]);
 
   return (
-    <View className="flex-row bg-white rounded-xl p-3 mb-3 items-center gap-2">
-      {/* Avatar */}
-      <ProfilePicture userInfo={item.user_info} containerStyle="h-28 w-28" />
+    <View className="relative mb-3 rounded-xl overflow-hidden">
+      <View className="absolute w-full h-full bg-white opacity-60" />
+      <View className="flex-row  items-center gap-2 p-3">
+        {/* Avatar */}
+        <ProfilePicture userInfo={item.user_info} containerStyle="h-28 w-28" />
 
-      {/* Info */}
-      <View className="flex-1">
-        <Text
-          className="text-lg font-bold text-uBlack"
-          numberOfLines={2}
-          style={{ lineHeight: 20 }}
-        >
-          {name}
-        </Text>
-        <Text className="text-sm text-uGray -mb-1">
-          {item.user_info.student_info?.$id}
-        </Text>
-        <Text className="text-sm text-uGray">{`${item.user_info.student_info?.dep_prog.split(
-          "-"
-        )[1]!} - ${
-          item.user_info.student_info?.year_level == "FIRST"
-            ? "1"
-            : item.user_info.student_info?.year_level == "SECOND"
-            ? "2"
-            : item.user_info.student_info?.year_level == "THIRD"
-            ? "3"
-            : item.user_info.student_info?.year_level == "FOURTH"
-            ? "4"
-            : "5"
-        }`}</Text>
-      </View>
-
-      {/* Logs */}
-      <View className="flex justify-center gap-1 w-24">
-        {logs.map((log) => (
-          <View
-            key={log.id}
-            className="flex-row items-center justify-between border border-gray-300 rounded-md px-2 py-1"
+        {/* Info */}
+        <View className="flex-1">
+          <Text
+            className="text-lg font-bold text-uBlack"
+            numberOfLines={2}
+            style={{ lineHeight: 20 }}
           >
-            <Text className="text-xs font-semibold mr-1">{log.type}:</Text>
-            <Text className="text-xs">{log.time}</Text>
-          </View>
-        ))}
+            {name}
+          </Text>
+          <Text className="text-sm text-uGray -mb-1">
+            {item.user_info.student_info?.$id}
+          </Text>
+          <Text className="text-sm text-uGray">{`${item.user_info.student_info?.dep_prog.split(
+            "-"
+          )[1]!} - ${
+            item.user_info.student_info?.year_level == "FIRST"
+              ? "1"
+              : item.user_info.student_info?.year_level == "SECOND"
+              ? "2"
+              : item.user_info.student_info?.year_level == "THIRD"
+              ? "3"
+              : item.user_info.student_info?.year_level == "FOURTH"
+              ? "4"
+              : "5"
+          }`}</Text>
+        </View>
+
+        {/* Logs */}
+        <View className="flex justify-center gap-1 w-24">
+          {logs.map((log) => (
+            <View
+              key={log.id}
+              className="flex-row items-center justify-between border border-gray-300 rounded-md px-2 py-1"
+            >
+              <Text className="text-xs font-semibold mr-1">{log.type}:</Text>
+              <Text className="text-xs">{log.time}</Text>
+            </View>
+          ))}
+        </View>
       </View>
     </View>
   );

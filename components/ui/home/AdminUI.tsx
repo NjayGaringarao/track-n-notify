@@ -7,7 +7,12 @@ import Toast from "react-native-toast-message";
 import { ILogItem } from "@/services/types/interface";
 import LogItem from "@/components/LogItem";
 import color from "@/constants/color";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+  Octicons,
+} from "@expo/vector-icons";
 import DateTimePicker, {
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
@@ -77,17 +82,20 @@ const HeaderLog = ({
 
 const emptyLog = () => {
   return (
-    <View className="flex-1 bg-white rounded-xl py-16 mt-10 items-center gap-2">
-      <MaterialCommunityIcons
-        name="timer-sand-empty"
-        size={64}
-        color={color.uGray}
-      />
+    <View className="rounded-xl mt-10 overflow-hidden">
+      <View className="absolute w-full h-full bg-white opacity-60"></View>
+      <View className="py-16 items-center gap-2">
+        <MaterialCommunityIcons
+          name="timer-sand-empty"
+          size={128}
+          color={color.uGray}
+        />
 
-      <Text className="text-xl font-medium text-uGray">Empty Record</Text>
-      <Text className="text-xs -mt-2">
-        No recorded Student Log as of the selected date.
-      </Text>
+        <Text className="text-2xl font-medium text-uGray">Empty Record</Text>
+        <Text className="text-xs -mt-2">
+          No recorded Student Log as of the selected date.
+        </Text>
+      </View>
     </View>
   );
 };
@@ -112,7 +120,7 @@ const AdminUI = () => {
       <View className="w-full">
         <Pressable
           onPress={() => setIsDatePickerVisible(true)}
-          className="flex-1 flex-row justify-between bg-white border-primary items-center py-1 mb-2 rounded-lg"
+          className="flex-1 flex-row justify-between bg-white border-primary items-center py-2 mb-2 rounded-lg"
         >
           <View className="flex-1 flex-row items-center">
             <Text className="text-uGray font-medium text-lg px-4">
@@ -184,18 +192,27 @@ const AdminUI = () => {
   return (
     <View className="flex-1 mx-6">
       {/* Header */}
-      <View className="flex-row py-4 w-full justify-between items-center border-b-2 border-white">
-        <Text className="text-2xl text-white">
+      <View className="flex-row py-2 w-full justify-between items-center border-b-2 border-white">
+        <Text className="text-2xl text-white font-medium">
           {userInfo.admin_info.department} LOG
         </Text>
 
-        <Image
-          source={image.prmsu}
-          className="w-14 h-14"
-          resizeMode="contain"
-        />
+        <Octicons name="log" size={48} color={color.white} />
       </View>
-
+      {/* Background */}
+      <Image
+        source={
+          userInfo.admin_info.department == "CCIT"
+            ? image.ccit
+            : userInfo.admin_info.department == "CTE"
+            ? image.cte
+            : userInfo.admin_info.department == "CBAPA"
+            ? image.cbapa
+            : image.prmsu
+        }
+        className="absolute mt-16 w-full h-full opacity-10"
+        resizeMode="contain"
+      />
       {/* Refreshable FlatList */}
       <FlatList
         data={logListItem}

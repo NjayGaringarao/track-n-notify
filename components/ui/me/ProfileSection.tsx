@@ -119,8 +119,7 @@ const ProfileSection = () => {
               userInfo={userInfo}
               setNewProfilePicture={(e) => setNewProfilePicture(e)}
               newProfilePicture={newProfilePicture}
-              containerStyle=" shadow-lg shadow-black"
-              imageStyle="h-32 w-32 rounded-3xl"
+              containerStyle="h-32 w-32 shadow-lg shadow-black"
             />
             <Text className="text-sm font-semibold">{userInfo.id}</Text>
           </View>
