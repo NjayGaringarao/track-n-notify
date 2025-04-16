@@ -13,20 +13,20 @@ export const getLogListItem = async (department: string, date: Date) => {
       localDate.getFullYear(),
       localDate.getMonth(),
       localDate.getDate(),
-      -8,
+      8,
       0,
       0,
-      0 // UTC time equivalent of 00:00 PH time
+      0
     ).toISOString();
 
     const endOfDay = new Date(
       localDate.getFullYear(),
       localDate.getMonth(),
-      localDate.getDate(),
-      16,
+      localDate.getDate() + 1, // NEXT DAY
+      8,
       0,
       0,
-      0 // UTC time equivalent of 24:00 PH time
+      0
     ).toISOString();
 
     const documents = await listDocuments(
