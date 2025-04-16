@@ -1,4 +1,4 @@
-import { SecurityInfo, AdminInfo, StudentInfo } from "./model";
+import { SecurityInfo, AdminInfo, StudentInfo, Log, User } from "./model";
 
 export interface ISignUp {
   role: string;
@@ -6,4 +6,11 @@ export interface ISignUp {
   name: [string, string?, string];
   email: string;
   password: string;
+}
+
+export interface ILogItem {
+  id: string;
+  name: [string, string?, string];
+  user_info: User;
+  logs: Log[];
 }

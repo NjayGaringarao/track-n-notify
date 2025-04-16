@@ -61,7 +61,8 @@ export function ModalStudentStatus({
       await updateStudentStatus(
         studentData?.id!,
         !studentData?.student_info?.isInside,
-        time
+        time,
+        studentData?.student_info?.dep_prog!
       );
 
       closeHandle();
@@ -92,7 +93,7 @@ export function ModalStudentStatus({
               <View className="bg-background shadow shadow-black flex-row w-full items-center rounded-lg">
                 <ProfilePicture
                   userInfo={studentData}
-                  containerStyle="shadow-none"
+                  containerStyle="shadow-none w-32 h-32"
                   onPress={() => setIsImagePreviewVisible(true)}
                 />
                 <View className="flex-1 px-4">

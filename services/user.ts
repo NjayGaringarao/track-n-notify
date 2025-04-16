@@ -147,7 +147,8 @@ export const updateGuardianData = async (
 export const updateStudentStatus = async (
   user_id: string,
   isInside: boolean,
-  time: Date
+  time: Date,
+  dep_prog: string
 ) => {
   try {
     const result = await _executeFunction(
@@ -157,6 +158,7 @@ export const updateStudentStatus = async (
         id: user_id,
         isInside: isInside,
         log_time: time,
+        dep_prog: dep_prog,
       }
     );
 

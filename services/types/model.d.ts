@@ -31,3 +31,11 @@ export type User = {
   admin_info?: AdminInfo;
   security_info?: SecurityInfo;
 };
+
+export type Log = {
+  id: string;
+  log_time: Date;
+  isInside: boolean;
+  user_info: User;
+  dep_prog: string;
+};

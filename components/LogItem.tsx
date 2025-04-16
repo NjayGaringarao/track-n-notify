@@ -1,0 +1,81 @@
+import React, { useEffect, useState } from "react";
+import { View, Text, Image } from "react-native";
+import { format } from "date-fns";
+import { ILogItem } from "@/services/types/interface";
+import ProfilePicture from "./ProfilePicture";
+
+interface ILogItemType {
+  item: ILogItem;
+}
+
+const LogItem = ({ item }: ILogItemType) => {
+  const [name, setName] = useState("");
+  const [logs, setLogs] = useState<
+    { id: string; time: string; type: string }[]
+  >([]);
+
+  useEffect(() => {
+    setName(`${item.name[0]} ${item.name[2]}`);
+    setLogs(
+      item.logs
+        .sort(
+          (a, b) =>
+            new Date(b.log_time).getTime() - new Date(a.log_time).getTime()
+        )
+        .map((log) => ({
+          id: log.id,
+          time: format(new Date(log.log_time), "h:mm a"),
+          type: log.isInside ? "IN" : "OUT",
+        }))
+    );
+  }, [item]);
+
+  return (
+    <View className="flex-row bg-white rounded-xl p-3 mb-3 items-center gap-2">
+      {/* Avatar */}
+      <ProfilePicture userInfo={item.user_info} containerStyle="h-28 w-28" />
+
+      {/* Info */}
+      <View className="flex-1">
+        <Text
+          className="text-lg font-bold text-uBlack"
+          numberOfLines={2}
+          style={{ lineHeight: 20 }}
+        >
+          {name}
+        </Text>
+        <Text className="text-sm text-uGray -mb-1">
+          {item.user_info.student_info?.$id}
+        </Text>
+        <Text className="text-sm text-uGray">{`${item.user_info.student_info?.dep_prog.split(
+          "-"
+        )[1]!} - ${
+          item.user_info.student_info?.year_level == "FIRST"
+            ? "1"
+            : item.user_info.student_info?.year_level == "SECOND"
+            ? "2"
+            : item.user_info.student_info?.year_level == "THIRD"
+            ? "3"
+            : item.user_info.student_info?.year_level == "FOURTH"
+            ? "4"
+            : "5"
+        }`}</Text>
+      </View>
+
+      {/* Logs */}
+      <View className="flex justify-center gap-1 w-24">
+        {logs.map((log) => (
+          <View
+            key={log.id}
+            className="flex-row items-center justify-between border border-gray-300 rounded-md px-2 py-1"
+          >
+            <Text className="text-xs font-semibold mr-1">{log.type}:</Text>
+            <Text className="text-xs">{log.time}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+};
+
+export default LogItem;

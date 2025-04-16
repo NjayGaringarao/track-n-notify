@@ -53,10 +53,10 @@ const StudentUI = () => {
               : `${userInfo.name[0]} ${userInfo.name[2]}`}
           </Text>
           <Text>
-            Department: {userInfo.student_info.dep_prog.split(" - ")[0]}
+            Department: {userInfo.student_info.dep_prog.split("-")[0]}
           </Text>
           <Text>
-            Program: {userInfo.student_info.dep_prog.split(" - ")[1]} -{" "}
+            Program: {userInfo.student_info.dep_prog.split("-")[1]} -{" "}
             {userInfo.student_info.year_level} YEAR
           </Text>
         </View>
