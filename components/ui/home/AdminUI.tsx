@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList } from "react-native";
+import { View, Text, Image, FlatList, Pressable } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import image from "@/constants/image";
 import { useGlobalContext } from "@/context/GlobalProvider";
@@ -7,7 +7,73 @@ import Toast from "react-native-toast-message";
 import { ILogItem } from "@/services/types/interface";
 import LogItem from "@/components/LogItem";
 import color from "@/constants/color";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
+
+interface IHeaderLog {
+  logDate: Date;
+  setLogDate: (e: Date) => void;
+  isTimePickerVisible: boolean;
+  setIsTimePickerVisible: (e: boolean) => void;
+}
+
+const HeaderLog = ({
+  logDate,
+  setLogDate,
+  isTimePickerVisible,
+  setIsTimePickerVisible,
+}: IHeaderLog) => {
+  const timePickerHandle = (
+    event: DateTimePickerEvent,
+    selectedDate?: Date
+  ) => {
+    if (selectedDate) setLogDate(selectedDate);
+    setIsTimePickerVisible(false);
+  };
+
+  return (
+    <View className="w-full">
+      <Pressable
+        onPress={() => setIsTimePickerVisible(true)}
+        className="flex-1 flex-row justify-between bg-white border-primary items-center py-1 mb-2 rounded-lg"
+      >
+        <View className="flex-1 flex-row items-center">
+          <Text className="text-uGray font-medium text-lg px-4">LOG DATE</Text>
+          <Text
+            className="text-uBlack text-2xl flex-1 text-center border-l border-uGray"
+            style={{
+              fontFamily: "Digital",
+            }}
+          >
+            {logDate.toLocaleDateString("en-PH", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+              weekday: "short",
+            })}
+          </Text>
+        </View>
+        <AntDesign
+          name="caretdown"
+          size={18}
+          color={color.uGray}
+          className="mr-3"
+        />
+      </Pressable>
+
+      {isTimePickerVisible && (
+        <DateTimePicker
+          value={logDate}
+          mode="date"
+          display="default"
+          onChange={timePickerHandle}
+        />
+      )}
+    </View>
+  );
+};
 
 const emptyLog = () => {
   return (
@@ -18,8 +84,9 @@ const emptyLog = () => {
         color={color.uGray}
       />
 
-      <Text className="text-xl font-semibold text-uGray">
-        No Student Log as of today.
+      <Text className="text-xl font-medium text-uGray">Empty Record</Text>
+      <Text className="text-xs -mt-2">
+        No recorded Student Log as of the selected date.
       </Text>
     </View>
   );
@@ -29,13 +96,68 @@ const AdminUI = () => {
   const { userInfo } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
   const [logListItem, setLogListItem] = useState<ILogItem[]>([]);
+  const [logDate, setLogDate] = useState<Date>(new Date());
+  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
 
-  const queryLogList = useCallback(async () => {
+  const HeaderLog = () => {
+    const datePickerHandle = (
+      event: DateTimePickerEvent,
+      selectedDate?: Date
+    ) => {
+      if (selectedDate) setLogDate(selectedDate);
+      setIsDatePickerVisible(false);
+    };
+
+    return (
+      <View className="w-full">
+        <Pressable
+          onPress={() => setIsDatePickerVisible(true)}
+          className="flex-1 flex-row justify-between bg-white border-primary items-center py-1 mb-2 rounded-lg"
+        >
+          <View className="flex-1 flex-row items-center">
+            <Text className="text-uGray font-medium text-lg px-4">
+              LOG DATE
+            </Text>
+            <Text
+              className="text-uBlack text-2xl flex-1 text-center border-l border-uGray"
+              style={{
+                fontFamily: "Digital",
+              }}
+            >
+              {logDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+                weekday: "short",
+              })}
+            </Text>
+          </View>
+          <AntDesign
+            name="caretdown"
+            size={18}
+            color={color.uGray}
+            className="mr-3"
+          />
+        </Pressable>
+
+        {isDatePickerVisible && (
+          <DateTimePicker
+            value={logDate}
+            mode="date"
+            display="default"
+            onChange={datePickerHandle}
+          />
+        )}
+      </View>
+    );
+  };
+
+  const fetchLogs = async () => {
     try {
       setIsLoading(true);
       const result = await getLogListItem(
         userInfo.admin_info?.department!,
-        new Date()
+        logDate
       );
       setLogListItem(result);
     } catch (error) {
@@ -47,11 +169,15 @@ const AdminUI = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [userInfo.admin_info?.department]);
+  };
+
+  const queryLogList = useCallback(async () => {
+    fetchLogs();
+  }, [fetchLogs]);
 
   useEffect(() => {
-    queryLogList();
-  }, [queryLogList]);
+    fetchLogs();
+  }, [userInfo.admin_info?.department, logDate]);
 
   if (!userInfo.admin_info) return null;
 
@@ -59,19 +185,10 @@ const AdminUI = () => {
     <View className="flex-1 mx-6">
       {/* Header */}
       <View className="flex-row py-4 w-full justify-between items-center border-b-2 border-white">
-        <View>
-          <Text className="text-2xl text-white">
-            {userInfo.admin_info.department} LOG
-          </Text>
-          <Text className="text-sm text-white -mt-1">
-            {new Date().toLocaleDateString("en-US", {
-              month: "short",
-              day: "2-digit",
-              year: "numeric",
-              weekday: "short",
-            })}
-          </Text>
-        </View>
+        <Text className="text-2xl text-white">
+          {userInfo.admin_info.department} LOG
+        </Text>
+
         <Image
           source={image.prmsu}
           className="w-14 h-14"
@@ -87,19 +204,10 @@ const AdminUI = () => {
         keyExtractor={(item) => item.id}
         refreshing={isLoading}
         onRefresh={queryLogList}
+        ListHeaderComponent={() => <HeaderLog />}
         contentContainerStyle={{ paddingBottom: 24 }}
         ListEmptyComponent={emptyLog}
       />
-      {/* <View className="w-full py-3 border-t">
-        <Text className="text-sm text-uBlack -mt-1">
-          {new Date().toLocaleDateString("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "numeric",
-            weekday: "short",
-          })}
-        </Text>
-      </View> */}
     </View>
   );
 };

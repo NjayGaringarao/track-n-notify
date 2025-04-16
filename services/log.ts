@@ -5,8 +5,29 @@ import { toLogItem, toLogList } from "@/util/dataTransferObject";
 
 export const getLogListItem = async (department: string, date: Date) => {
   try {
-    const startOfDay = new Date(date.setUTCHours(0, 0, 0, 0)).toISOString();
-    const endOfDay = new Date(date.setUTCHours(24, 0, 0, 0)).toISOString();
+    // Clone the date to avoid mutation
+    const localDate = new Date(date);
+
+    // Manually adjust for UTC+8
+    const startOfDay = new Date(
+      localDate.getFullYear(),
+      localDate.getMonth(),
+      localDate.getDate(),
+      -8,
+      0,
+      0,
+      0 // UTC time equivalent of 00:00 PH time
+    ).toISOString();
+
+    const endOfDay = new Date(
+      localDate.getFullYear(),
+      localDate.getMonth(),
+      localDate.getDate(),
+      16,
+      0,
+      0,
+      0 // UTC time equivalent of 24:00 PH time
+    ).toISOString();
 
     const documents = await listDocuments(
       env.DATABASE_PRIMARY,

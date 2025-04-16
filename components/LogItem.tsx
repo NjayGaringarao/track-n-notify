@@ -24,7 +24,13 @@ const LogItem = ({ item }: ILogItemType) => {
         )
         .map((log) => ({
           id: log.id,
-          time: format(new Date(log.log_time), "h:mm a"),
+          time: new Date(log.log_time).toLocaleTimeString("en-PH", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "Asia/Manila",
+          }),
+
           type: log.isInside ? "IN" : "OUT",
         }))
     );
