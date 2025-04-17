@@ -4,7 +4,7 @@ import image from "@/constants/image";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { generateQR } from "@/services/appwrite";
 import ProfilePicture from "@/components/ProfilePicture";
-import { Foundation } from "@expo/vector-icons";
+import { Foundation, MaterialCommunityIcons } from "@expo/vector-icons";
 import color from "@/constants/color";
 import Loading from "@/components/Loading";
 import Toast from "react-native-toast-message";
@@ -34,8 +34,10 @@ const StudentUI = () => {
   return user && userInfo.student_info ? (
     <View className="flex-1 mx-6">
       {/** Header */}
-      <View className="flex-row py-4 w-full justify-between items-center border-b-2 border-white">
-        <Text className="text-2xl text-white">STUDENT INFORMATION</Text>
+      <View className="flex-row py-2 w-full justify-between items-center border-b-2 border-white">
+        <Text className="text-2xl text-white font-medium">
+          STUDENT INFORMATION
+        </Text>
         <Image
           source={image.prmsu}
           className="w-14 h-14"
@@ -44,38 +46,43 @@ const StudentUI = () => {
       </View>
 
       <View className="flex-row w-full my-10 text-base justify-between items-center">
-        <View className="gap-2">
-          <Text>Student Number: {userInfo.id}</Text>
-          <Text>
-            Name:{" "}
-            {userInfo.name[1]
-              ? `${userInfo.name[0]} ${userInfo.name[1]} ${userInfo.name[2]}`
-              : `${userInfo.name[0]} ${userInfo.name[2]}`}
+        <View className="">
+          <Text className="text-base text-uBlack font-medium">
+            {userInfo.id}
           </Text>
-          <Text>
-            Department: {userInfo.student_info.dep_prog.split("-")[0]}
+          <Text className="text-xl text-black font-semibold">
+            {`${userInfo.name[0]} ${userInfo.name[2]}`}
           </Text>
-          <Text>
-            Program: {userInfo.student_info.dep_prog.split("-")[1]} -{" "}
-            {userInfo.student_info.year_level} YEAR
-          </Text>
+          <Text>{`${userInfo.student_info.dep_prog} | ${userInfo.student_info.year_level} YEAR`}</Text>
         </View>
         <ProfilePicture userInfo={userInfo} />
       </View>
+
       <TouchableOpacity
         onPress={refreshHandle}
         disabled={!isInternetConnection}
-        className="w-full border rounded-md bg-primary shadow-md shadow-black overflow-hidden"
+        className="w-full rounded-md bg-primary shadow-md shadow-black overflow-hidden"
       >
         {!isLoading ? (
-          <View className="flex-row justify-between items-center py-4 px-6">
-            <View className="-gap-2">
-              <Text className="text-2xl font-semibold text-uBlack ">
-                {userInfo.student_info.isInside
-                  ? "INSIDE THE CAMPUS"
-                  : "OUTSIDE THE CAMPUS"}
-              </Text>
-              <Text className="text-base text-uGray">Current Status</Text>
+          <View className="flex-row justify-between items-center py-8 px-6">
+            <View className="flex-row gap-2 items-center">
+              <MaterialCommunityIcons
+                name={
+                  userInfo.student_info.isInside
+                    ? "border-outside"
+                    : "border-inside"
+                }
+                size={56}
+                color={color.uBlack}
+              />
+              <View className="">
+                <Text className="text-3xl font-black text-uBlack">
+                  {userInfo.student_info.isInside ? "INSIDE" : "OUTSIDE"}
+                </Text>
+                <Text className="text-sm text-uGray -mt-1">
+                  Student Campus Location
+                </Text>
+              </View>
             </View>
 
             <Foundation name="refresh" size={44} color={color.uBlack} />
@@ -92,8 +99,16 @@ const StudentUI = () => {
           </View>
         )}
       </TouchableOpacity>
-      <View className="flex-1 items-center justify-center">
-        <View className="bg-primary h-72 w-72 p-4 rounded-2xl shadow-md shadow-black overflow-hidden ">
+
+      <View className="flex-1 flex-row items-center justify-between gap-2">
+        <Text
+          className="flex-1 text-uBlack font-medium text-lg"
+          style={{ lineHeight: 20 }}
+        >
+          Allow the security personnel to scan the QR Code to update your campus
+          location. Your guardian will be notified of any changes.
+        </Text>
+        <View className="bg-primary h-1/2 w-1/2 p-4 rounded-md shadow-md shadow-black overflow-hidden ">
           <Image
             source={{ uri: generateQR(user.$id) }}
             resizeMode="contain"
