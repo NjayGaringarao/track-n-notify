@@ -64,7 +64,7 @@ const SecurityUI = () => {
     <View className="flex-1 mx-6">
       {/* Header */}
       <View className="flex-row py-2 w-full justify-between items-center border-b-2 border-white">
-        <Text className="text-2xl text-white">SECURITY</Text>
+        <Text className="text-2xl text-white font-medium">SECURITY</Text>
         <Image
           source={image.prmsu}
           className="w-14 h-14"
@@ -72,9 +72,9 @@ const SecurityUI = () => {
         />
       </View>
 
-      <View className="flex-1 my-10 justify-center items-center gap-8 rounded">
+      <View className="flex-1 my-6 justify-center items-center gap-8 rounded">
         {!showPermissionsPage ? (
-          <View className="w-96 h-[400px] bg-uBlack rounded-lg overflow-hidden items-center justify-center border-2 border-black">
+          <View className="w-full h-full bg-uBlack rounded-lg overflow-hidden items-center justify-center border-2 border-black">
             {device ? (
               <Camera
                 style={{ width: "100%", height: "100%" }}
@@ -90,17 +90,41 @@ const SecurityUI = () => {
             )}
           </View>
         ) : (
-          <View className="w-96 h-96 rounded-lg overflow-hidden items-center justify-center">
-            <Text className="text-lg text-uBlack mb-4 text-center">
-              Camera and Microphone permissions are required
+          <View className="w-full h-full rounded-lg overflow-hidden items-center justify-center">
+            <Text className="text-xl text-uBlack mb-4 font-semibold text-center">
+              Camera permissions are required.
             </Text>
             <Button
               title="Request Permission"
               handlePress={requestPermissions}
+              containerStyles="h-12"
             />
           </View>
         )}
-        <Text className="text-2xl text-uBlack">Scan Student's QR Code</Text>
+      </View>
+      <View className="w-full mb-8">
+        <Text className="text-xl text-uBlack font-semibold">
+          Update Student's Status
+        </Text>
+        <View className="flex-row gap-2">
+          <Text className="text-base text-uBlack">1.</Text>
+          <Text className="text-base text-uBlack flex-shrink">
+            Ensure the app has camera permissions enabled in your device
+            settings.
+          </Text>
+        </View>
+        <View className="flex-row gap-2">
+          <Text className="text-base text-uBlack">2.</Text>
+          <Text className="text-base text-uBlack flex-shrink">
+            Point the camera at the student's QR Code for the modal to show.
+          </Text>
+        </View>
+        <View className="flex-row gap-2">
+          <Text className="text-base text-uBlack">3.</Text>
+          <Text className="text-base text-uBlack flex-shrink">
+            Verify student's identity and update its status.
+          </Text>
+        </View>
       </View>
       {isScanned && (
         <ModalStudentStatus setIsScanned={setIsScanned} scannedID={scannedID} />
