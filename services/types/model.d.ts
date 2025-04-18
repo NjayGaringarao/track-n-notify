@@ -2,8 +2,9 @@ export type StudentInfo = {
   $id: string;
   dep_prog: string;
   year_level: string;
-  guardian_name: string;
+  guardian_name?: string;
   guardian_salutation?: string;
+  guardian_cn?: string;
   isInside?: boolean;
 };
 

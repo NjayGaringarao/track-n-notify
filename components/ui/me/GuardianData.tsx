@@ -13,24 +13,21 @@ import ItemPicker from "@/components/ItemPicker";
 import { Picker } from "@react-native-picker/picker";
 
 const GuardianData = () => {
-  const { userInfo, user, isInternetConnection } = useGlobalContext();
+  const { userInfo, user, isInternetConnection, refreshUserRecord } =
+    useGlobalContext();
   const [isModified, setIsModified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [guardianForm, setGuardianForm] = useState({
     name: userInfo.student_info?.guardian_name,
     salutation: userInfo.student_info?.guardian_salutation,
-    contact_number: user?.targets.find(
-      (target) => target.providerType === "sms"
-    )?.identifier,
+    contact_number: userInfo.student_info?.guardian_cn,
   });
 
   const clearHandle = () => {
     setGuardianForm({
       name: userInfo.student_info?.guardian_name,
       salutation: userInfo.student_info?.guardian_salutation,
-      contact_number: user?.targets.find(
-        (target) => target.providerType === "sms"
-      )?.identifier,
+      contact_number: userInfo.student_info?.guardian_cn,
     });
   };
 
@@ -47,13 +44,17 @@ const GuardianData = () => {
       await updateGuardianData(
         user?.$id!,
         guardianForm.name!,
+        guardianForm.salutation!,
         guardianForm.contact_number!
       );
+
       Toast.show({
         type: "success",
         text1: "Update Success",
         text2: `Successfully updated your G/P Information.`,
       });
+
+      await refreshUserRecord({ info: true });
       clearHandle();
     } catch (error) {
       Toast.show({
@@ -71,9 +72,8 @@ const GuardianData = () => {
     if (userInfo && userInfo.student_info && user) {
       if (
         guardianForm.name !== userInfo.student_info.guardian_name ||
-        guardianForm.contact_number !==
-          user.targets.find((target) => target.providerType === "sms")
-            ?.identifier!
+        guardianForm.salutation !== userInfo.student_info.guardian_salutation ||
+        guardianForm.contact_number !== userInfo.student_info.guardian_cn
       ) {
         setIsModified(true);
       } else {
@@ -103,11 +103,11 @@ const GuardianData = () => {
               containerStyle="w-full border-2 border-primary rounded-xl bg-white"
             >
               <Picker.Item label="NONE" value="NONE" />
-              <Picker.Item label="MR." value="MR" />
-              <Picker.Item label="MS." value="MS" />
-              <Picker.Item label="MRS" value="MRS" />
-              <Picker.Item label="MA'AM" value="MA'AM" />
-              <Picker.Item label="SIR" value="SIR" />
+              <Picker.Item label="MR." value="MR." />
+              <Picker.Item label="MS." value="MS." />
+              <Picker.Item label="MRS" value="MRS." />
+              <Picker.Item label="MA'AM" value="MA'AM." />
+              <Picker.Item label="SIR" value="SIR." />
             </ItemPicker>
           </View>
           <TextBox
@@ -124,7 +124,7 @@ const GuardianData = () => {
         <TextBox
           textValue={guardianForm.contact_number!}
           title="Mobile Number"
-          placeholder="+639123456789"
+          placeholder="09123456789"
           handleChangeText={(e) =>
             setGuardianForm({
               ...guardianForm,

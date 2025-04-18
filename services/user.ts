@@ -125,19 +125,20 @@ export const updateStudentData = async (
 export const updateGuardianData = async (
   user_id: string,
   name: string,
+  salutation: string,
   contact_number: string
 ) => {
   try {
-    const result = await _executeFunction(
-      env.FUNCTION_ACCOUNT,
-      "updateGuardian",
+    return await updateDocument(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_STUDENT_INFO,
+      user_id,
       {
-        id: user_id,
-        name: name,
-        contact_number: contact_number,
+        guardian_name: name,
+        guardian_salutation: salutation,
+        guardian_cn: contact_number,
       }
     );
-    if (result.responseStatusCode != 200) throw "a";
   } catch (error) {
     console.log(`user.updateGuardianData : ${error}`);
     throw error;
