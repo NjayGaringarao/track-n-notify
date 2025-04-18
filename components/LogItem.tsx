@@ -9,13 +9,17 @@ interface ILogItemType {
 }
 
 const LogItem = ({ item }: ILogItemType) => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState<[string, string | undefined, string]>([
+    "",
+    undefined,
+    "",
+  ]);
   const [logs, setLogs] = useState<
     { id: string; time: string; type: string }[]
   >([]);
 
   useEffect(() => {
-    setName(`${item.name[0]} ${item.name[2]}`);
+    setName(item.name);
     setLogs(
       item.logs
         .sort(
@@ -41,17 +45,30 @@ const LogItem = ({ item }: ILogItemType) => {
       <View className="absolute w-full h-full bg-white opacity-60" />
       <View className="flex-row  items-center gap-2 p-3">
         {/* Avatar */}
-        <ProfilePicture userInfo={item.user_info} containerStyle="h-28 w-28" />
+        <ProfilePicture
+          userInfo={item.user_info}
+          containerStyle="h-28 w-28 flex-2"
+        />
 
         {/* Info */}
         <View className="flex-1">
           <Text
             className="text-lg font-bold text-uBlack"
-            numberOfLines={2}
+            numberOfLines={1}
+            adjustsFontSizeToFit={true}
             style={{ lineHeight: 20 }}
           >
-            {name}
+            {name[0]}
           </Text>
+          <Text
+            className="text-lg font-bold text-uBlack"
+            numberOfLines={1}
+            style={{ lineHeight: 20 }}
+            adjustsFontSizeToFit={true}
+          >
+            {name[2]}
+          </Text>
+
           <Text className="text-sm text-uGray -mb-1">
             {item.user_info.student_info?.$id}
           </Text>
