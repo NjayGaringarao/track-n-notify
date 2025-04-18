@@ -11,11 +11,14 @@ import Toast from "react-native-toast-message";
 import { isEmailExisting, isUserIdExisting } from "@/services/credentials";
 import { regex } from "@/constants/regex";
 import { router } from "expo-router";
-import { signUp } from "@/services/auth";
+import { signIn, signUp } from "@/services/auth";
 import { confirmAction } from "@/util/common";
 import { AdminInfo, SecurityInfo, StudentInfo } from "@/services/types/model";
+import { useGlobalContext } from "@/context/GlobalProvider";
+import { signInUser } from "@/services/appwrite";
 
 const sign_up = () => {
+  const { initializeGlobalState } = useGlobalContext();
   const [accountType, setAccountType] = useState("STUDENT");
   const [isLoading, setIsLoading] = useState(false);
   const scrollViewRef = useRef<ScrollView | null>(null);
@@ -85,6 +88,7 @@ const sign_up = () => {
         type: "error",
         text1: "Incomplete Name",
         text2: "Please fillout first and last name.",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -94,6 +98,7 @@ const sign_up = () => {
         type: "error",
         text1: "Invalid Student ID",
         text2: "Please provide your valid student ID.",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -103,6 +108,7 @@ const sign_up = () => {
         type: "error",
         text1: "Invalid Employee ID",
         text2: "Please provide your valid employee ID.",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -112,6 +118,7 @@ const sign_up = () => {
         type: "error",
         text1: "Invalid Employee ID",
         text2: "Please provide your valid employee ID.",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -121,6 +128,7 @@ const sign_up = () => {
         type: "error",
         text1: "Invalid Email",
         text2: "Please provide your valid email.",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -131,6 +139,7 @@ const sign_up = () => {
         text1: "Weak Password",
         text2:
           "Password should be more than 8 characters long containing alphanumeric and other special characters (_!@#$%^&.,). It should also not be the same with the old password",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -140,6 +149,7 @@ const sign_up = () => {
         type: "error",
         text1: "Unmatched password",
         text2: "Make sure that confirm password matches your given password.",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -159,6 +169,7 @@ const sign_up = () => {
         type: "error",
         text1: "ID Already Used",
         text2: "Using the same ID for multiple account is not allowed.",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -168,6 +179,7 @@ const sign_up = () => {
         type: "error",
         text1: "Email Already Used",
         text2: "Please try again with different email.",
+        visibilityTime: 5000,
       });
       return false;
     }
@@ -175,7 +187,12 @@ const sign_up = () => {
   };
 
   const signUpHandle = async () => {
-    if (!(await confirmAction("Confirm SignUp", "Do you want to proceed?"))) {
+    if (
+      !(await confirmAction(
+        "Confirm Sign Up",
+        "Are you sure you want to proceed with the provided information?"
+      ))
+    ) {
       return;
     }
     try {
@@ -198,11 +215,22 @@ const sign_up = () => {
       Toast.show({
         type: "success",
         text1: "Sign Up Success",
-        text2: "You may now sign in using your ID and password.",
+        text2: "You are automatically signed in to Track n Notify.",
         visibilityTime: 5000,
       });
       clearHandle();
-      router.back();
+
+      try {
+        await signInUser(credentialForm.email, credentialForm.password);
+        await initializeGlobalState();
+      } catch (error) {
+        Toast.show({
+          type: "error",
+          text1: "Sign In Failed",
+          text2: `${error}`,
+        });
+        router.back();
+      }
     } catch (error) {
       if (error !== "EXIT") {
         Toast.show({

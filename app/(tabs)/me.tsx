@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { confirmAction } from "@/util/common";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { signOut } from "@/services/auth";
-import { router } from "expo-router";
 import Toast from "react-native-toast-message";
 import Button from "@/components/Button";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -17,8 +16,7 @@ import LoginCredentials from "@/components/ui/me/LoginCredentials";
 import GuardianData from "@/components/ui/me/GuardianData";
 
 const me = () => {
-  const { user, userInfo, isInternetConnection, resetGlobalState } =
-    useGlobalContext();
+  const { user, isInternetConnection, resetGlobalState } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const signOutHandle = async () => {
@@ -26,7 +24,7 @@ const me = () => {
       if (
         !(await confirmAction(
           "Confirm Logout",
-          "You won't recieve a notification while being logged out."
+          "Are you sure you want to log out? You can log back in anytime."
         ))
       ) {
         return;
