@@ -135,7 +135,9 @@ const LoginCredentials = () => {
           />
           <TextBox
             title={
-              userCredential.role === "admin" ? "Employee ID" : "Student Number"
+              userCredential.role === "STUDENT"
+                ? "Student Number"
+                : "Employee ID"
             }
             textValue={userCredential.id}
             placeholder="Unset"
